@@ -108,7 +108,7 @@ Now, about the fourth method:
     }
    ```
 
-2. **Gratitude**
+**Gratitude**
 
   - Separate gratitude to **continue96** for fixing bugs 
   
