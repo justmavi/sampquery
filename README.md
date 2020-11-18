@@ -38,7 +38,7 @@ There are four methods in the **SampQuery** class, but for now I'll tell you abo
    
    ```csharp
     var sampQuery = new SampQuery("127.0.0.1", 7777);
-    SampServerInfoData data = sampQuery.GetServerData();
+    SampServerInfoData data = sampQuery.GetServerRules();
 
     Console.WriteLine($"Lagcomp {(data.Lagcomp ? "On" : "Off")}. Map: {data.MapName}. SAMPCAC: {data.SAMPCAC_Version ?? "Isn't required"}");
     // Lagcomp On. Map: San-Andreas. SAMPCAC: Isn't required
