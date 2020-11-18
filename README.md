@@ -111,6 +111,6 @@ Now, about the fourth method:
 
 **Gratitude**
 
-  - Separate gratitude to **@continue96** for fixing bugs 
+  - Separate gratitude to **@continue98** for fixing bugs 
   
 Official theme: https://pawn-wiki.ru/index.php?/topic/51733-klass-dlja-otpravki-zaprosov-na-servera-sa-mp/
