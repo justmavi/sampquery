@@ -67,7 +67,7 @@ There are four methods in the **SampQuery** class, but for now I'll tell you abo
    ```
 Added the **SampServerInfoData, SampServerRulesData, and SampServerPlayerData** classes for easy management of received information:
    
-1.SampServerInfoData
+1. **SampServerInfoData**
   - HostName
   - GameMode
   - Language
@@ -76,7 +76,7 @@ Added the **SampServerInfoData, SampServerRulesData, and SampServerPlayerData** 
   - Password
   - ServerPing
   
-2.SampServerRulesData
+2. **SampServerRulesData**
   - Lagcomp
   - MapName
   - Version
@@ -86,7 +86,7 @@ Added the **SampServerInfoData, SampServerRulesData, and SampServerPlayerData** 
   - WorldTime
   - Gravity
   
-3.SampServerPlayerData
+3. **SampServerPlayerData**
   - PlayerId
   - PlayerName
   - PlayerScore
@@ -102,6 +102,7 @@ Now, about the fourth method:
    
    ```csharp
     var sampQuery = new SampQuery("127.0.0.1", 7777, "changeme"); // changeme is the password from RCON
+    
     foreach(string answer in sampQuery.SendRconCommand("varlist"))
     {
         Console.WriteLine(answer);
@@ -110,6 +111,6 @@ Now, about the fourth method:
 
 **Gratitude**
 
-  - Separate gratitude to **continue96** for fixing bugs 
+  - Separate gratitude to **@continue96** for fixing bugs 
   
-More detail: https://pawn-wiki.ru/index.php?/topic/51733-klass-dlja-otpravki-zaprosov-na-servera-sa-mp/
+Official theme: https://pawn-wiki.ru/index.php?/topic/51733-klass-dlja-otpravki-zaprosov-na-servera-sa-mp/
