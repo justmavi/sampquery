@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using SampQueryApi;
-using System.Linq;
 using System.Reflection;
 
 namespace samptest
