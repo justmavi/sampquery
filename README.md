@@ -30,7 +30,7 @@ There are four methods in the **SampQuery** class, but for now I'll tell you abo
    // Server SA-MP Server. Online: 0/50
    ```
    
-2. `GetRulesInfo` — request the rules, set by the server
+2. `GetServerRules` — request the rules, set by the server
 
    - **Returns** the `SampServerRulesData` object, which contains all information about the rules of the server.
    
@@ -45,7 +45,7 @@ There are four methods in the **SampQuery** class, but for now I'll tell you abo
    ```
    **The maximum value of the player ID is 255. Two-byte identifiers are not supported here (SA-MP limit).**
    
-3. `GetPlayersInfo` — request players online with detailed information (works up to 100 online, SA-MP limit)
+3. `GetServerPlayers` — request players online with detailed information (works up to 100 online, SA-MP limit)
 
    - **Returns** a list of the `SampServerPlayerData` objects, which contains all information about players.
    
