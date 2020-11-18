@@ -14,14 +14,14 @@ namespace SampQueryApi
             var api = new SampQuery(ip, port);
 
             Console.WriteLine("Information" + Environment.NewLine);
-            SampServerInfoData serverInfo = api.GetSampServerInfo();
+            SampServerInfoData serverInfo = api.GetServerInfo();
             PropertyInfo[] sI_properties = serverInfo.GetType().GetProperties();
             foreach (PropertyInfo property in sI_properties)
             {
                 Console.WriteLine($"{property.Name}:\t\t\t{property.GetValue(serverInfo)}");
             }
 
-            SampServerRulesData sampServerRulesData = api.GetSampServerRules();
+            SampServerRulesData sampServerRulesData = api.GetServerRules();
 
             Console.WriteLine(Environment.NewLine + "Rules" + Environment.NewLine);
             PropertyInfo[] sR_properties = sampServerRulesData.GetType().GetProperties();
@@ -32,7 +32,7 @@ namespace SampQueryApi
 
             Console.WriteLine(Environment.NewLine + "Players" + Environment.NewLine);
 
-            List<SampServerPlayerData> serverPlayersInfo = api.GetSampServerPlayersData();
+            List<SampServerPlayerData> serverPlayersInfo = api.GetServerPlayers();
             Console.WriteLine("ID | Name | Score | Ping\n");
 
             foreach (SampServerPlayerData player in serverPlayersInfo)
