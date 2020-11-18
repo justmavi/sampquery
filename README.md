@@ -17,9 +17,12 @@ SampQuery(IPAddress ip, ushort port, string password)
 There are four methods in the **SampQuery** class, but for now I'll tell you about three:
 
 1. `GetServerInfo` — request basic information about the server
+
    - **Returns** the `SampServerInfoData` object, which contains all information about the server
+   
    - **Usage**
-   ```
+   
+   ```csharp
    var sampQuery = new SampQuery("127.0.0.1", 7777);
    SampServerInfoData data = sampQuery.GetServerInfo();
 
@@ -28,9 +31,12 @@ There are four methods in the **SampQuery** class, but for now I'll tell you abo
    ```
    
 2. `GetRulesInfo` — request the rules, set by the server
+
    - **Returns** the `SampServerRulesData` object, which contains all information about the rules of the server.
+   
    - **Usage**
-   ```
+   
+   ```csharp
     var sampQuery = new SampQuery("127.0.0.1", 7777);
     SampServerInfoData data = sampQuery.GetServerData();
 
@@ -40,9 +46,12 @@ There are four methods in the **SampQuery** class, but for now I'll tell you abo
    **The maximum value of the player ID is 255. Two-byte identifiers are not supported here (SA-MP limit).**
    
 3. `GetPlayersInfo` — request players online with detailed information (works up to 100 online, SA-MP limit)
+
    - **Returns** a list of the `SampServerPlayerData` objects, which contains all information about players.
+   
    - **Usage**
-   ```
+   
+   ```csharp
     var sampQuery = new SampQuery("127.0.0.1", 7777);
     List<SampServerPlayerData> datas = sampQuery.GetServerPlayers();
     
@@ -66,6 +75,7 @@ Added the **SampServerInfoData, SampServerRulesData, and SampServerPlayerData** 
   - MaxPlayers
   - Password
   - ServerPing
+  
 2.SampServerRulesData
   - Lagcomp
   - MapName
@@ -75,6 +85,7 @@ Added the **SampServerInfoData, SampServerRulesData, and SampServerPlayerData** 
   - Weburl
   - WorldTime
   - Gravity
+  
 3.SampServerPlayerData
   - PlayerId
   - PlayerName
@@ -84,9 +95,12 @@ Added the **SampServerInfoData, SampServerRulesData, and SampServerPlayerData** 
 Now, about the fourth method:
 
 1. `SendRconCommand(command)` — list of lines with the server response
+
    - **Returns** a list of the `SampServerPlayerData` objects, which contains all information about players.
+   
    - **Usage**
-   ```
+   
+   ```csharp
     var sampQuery = new SampQuery("127.0.0.1", 7777, "changeme"); // changeme is the password from RCON
     foreach(string answer in sampQuery.SendRconCommand("varlist"))
     {
@@ -95,6 +109,7 @@ Now, about the fourth method:
    ```
 
 2. **Gratitude**
+
   - Separate gratitude to **continue96** for fixing bugs 
   
 More detail: https://pawn-wiki.ru/index.php?/topic/51733-klass-dlja-otpravki-zaprosov-na-servera-sa-mp/
