@@ -96,7 +96,7 @@ namespace SampQueryApi
             connect2Server.Close();
             return szReceive;
         }
-        private List<string> RecieveRconAnswer()
+        private List<string> ReceiveRconAnswer()
         {
             EndPoint endpoint = new IPEndPoint(serverIp, iPort);
 
@@ -147,7 +147,7 @@ namespace SampQueryApi
 
             _ = connect2Server.SendTo(stream.ToArray(), endpoint);
             
-            return RecieveRconAnswer();
+            return ReceiveRconAnswer();
         }
 
 
