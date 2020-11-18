@@ -1,4 +1,4 @@
-# sampquery
+# Simple class for sending requests to the SA-MP server
 Well, this is the same class published by zeelorenc in GitHub 7 years ago, which was also in the wiki samp. After doing a couple of tests with this class, we found critical errors that caused the data not only to be unreadable, but also could lead to a crash (*nonsense, try.. catch would not be allowed*). The code has also been partially rewritten, encoding problems have been fixed, and classes have been added for more convenient use of the received data. I'll tell you more below.
 
 First, declaring and initializing an object
