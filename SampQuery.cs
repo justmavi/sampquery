@@ -154,7 +154,7 @@ namespace SampQueryApi
         }
 
 
-        public List<SampServerPlayerData> GetSampServerPlayersData()
+        public List<SampServerPlayerData> GetServerPlayers()
         {
             byte[] szReceive = SendSocketToServer(serverPlayersPacketType);
 
@@ -178,7 +178,7 @@ namespace SampQueryApi
 
             return datas;
         }
-        public SampServerInfoData GetSampServerInfo()
+        public SampServerInfoData GetServerInfo()
         {
             byte[] szReceive = SendSocketToServer(serverInfoPacketType);
 
@@ -202,7 +202,7 @@ namespace SampQueryApi
                 ServerPing = ReceiveMS.Subtract(TransmitMS).Milliseconds,
             };
         }
-        public SampServerRulesData GetSampServerRules()
+        public SampServerRulesData GetServerRules()
         {
             byte[] szReceive = SendSocketToServer(serverRulesPacketType);
             var sampServerRulesData = new SampServerRulesData();
