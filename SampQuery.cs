@@ -57,8 +57,7 @@ namespace SampQueryApi
         {
             this.password = password;
         }
-        public SampQuery(in IPAddress ip, in ushort port, in string password) : this(ip.ToString(), port, password)
-
+        public SampQuery(in IPAddress ip, in ushort port, in string password) : this(ip.ToString(), port, password) { }
         private byte[] SendSocketToServer(in char packetType)
         {
             connect2Server = new Socket(serverEndPoint.AddressFamily, SocketType.Dgram, ProtocolType.Udp)
