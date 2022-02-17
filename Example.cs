@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Net;
 
 namespace SampQueryApi
 {
@@ -8,10 +9,10 @@ namespace SampQueryApi
     {
         static void Main(string[] args)
         {
-            string ip = "164.132.6.130";
+            string host = "classic.samp-rp.ru";
             ushort port = 7777;
 
-            var api = new SampQuery(ip, port);
+            var api = new SampQuery(host, port);
 
             Console.WriteLine("Information" + Environment.NewLine);
             SampServerInfoData serverInfo = api.GetServerInfo();
