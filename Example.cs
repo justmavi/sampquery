@@ -1,28 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Net;
+using System.Threading.Tasks;
 
 namespace SampQueryApi
 {
     class Tests
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
-            string host = "classic.samp-rp.ru";
-            ushort port = 7777;
+            string host = "glow-dm.ru";
+            ushort port = 6666;
 
             var api = new SampQuery(host, port);
 
             Console.WriteLine("Information" + Environment.NewLine);
-            SampServerInfoData serverInfo = api.GetServerInfo();
+            SampServerInfoData serverInfo = await api.GetServerInfo();
             PropertyInfo[] sI_properties = serverInfo.GetType().GetProperties();
             foreach (PropertyInfo property in sI_properties)
             {
                 Console.WriteLine($"{property.Name}:\t\t\t{property.GetValue(serverInfo)}");
             }
 
-            SampServerRulesData sampServerRulesData = api.GetServerRules();
+            SampServerRulesData sampServerRulesData = await api.GetServerRules();
 
             Console.WriteLine(Environment.NewLine + "Rules" + Environment.NewLine);
             PropertyInfo[] sR_properties = sampServerRulesData.GetType().GetProperties();
@@ -33,7 +33,7 @@ namespace SampQueryApi
 
             Console.WriteLine(Environment.NewLine + "Players" + Environment.NewLine);
 
-            List<SampServerPlayerData> serverPlayersInfo = api.GetServerPlayers();
+            List<SampServerPlayerData> serverPlayersInfo = await api.GetServerPlayers();
             Console.WriteLine("ID | Name | Score | Ping\n");
 
             foreach (SampServerPlayerData player in serverPlayersInfo)

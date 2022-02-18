@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Reflection;
 using System.Globalization;
+using System.Threading.Tasks;
 
 namespace SampQueryApi
 {
@@ -52,7 +53,7 @@ namespace SampQueryApi
         }
         public SampQuery(IPAddress ip, ushort port, string password) : this(ip.ToString(), port, password) {}
 
-        private byte[] SendSocketToServer(char packetType)
+        private async Task<byte[]> SendSocketToServer(char packetType)
         {
             connect2Server = new Socket(serverEndPoint.AddressFamily, SocketType.Dgram, ProtocolType.Udp)
             {
@@ -78,12 +79,12 @@ namespace SampQueryApi
 
                     transmitMS = DateTime.Now; 
 
-                    connect2Server.SendTo(stream.ToArray(), serverEndPoint);
+                    await connect2Server.SendToAsync(stream.ToArray(), SocketFlags.None, serverEndPoint);
 
                     EndPoint rawPoint = serverEndPoint;
                     var szReceive = new byte[szReceiveArraySize];
 
-                    connect2Server.ReceiveFrom(szReceive, ref rawPoint);
+                    await connect2Server.ReceiveFromAsync(szReceive, SocketFlags.None, rawPoint);
 
                     connect2Server.Close();
                     return szReceive;
@@ -153,9 +154,9 @@ namespace SampQueryApi
             
             return ReceiveRconAnswer();
         }
-        public List<SampServerPlayerData> GetServerPlayers()
+        public async Task<List<SampServerPlayerData>> GetServerPlayers()
         {
-            byte[] szReceive = SendSocketToServer(serverPlayersPacketType);
+            byte[] szReceive = await SendSocketToServer(serverPlayersPacketType);
 
             List<SampServerPlayerData> datas = new List<SampServerPlayerData>();
 
@@ -181,9 +182,9 @@ namespace SampQueryApi
 
             return datas;
         }
-        public SampServerInfoData GetServerInfo()
+        public async Task<SampServerInfoData> GetServerInfo()
         {
-            byte[] szReceive = SendSocketToServer(serverInfoPacketType);
+            byte[] szReceive = await SendSocketToServer(serverInfoPacketType);
 
             receiveMS = DateTime.Now;
             using (var stream = new MemoryStream(szReceive))
@@ -208,9 +209,9 @@ namespace SampQueryApi
                 }
             }
         }
-        public SampServerRulesData GetServerRules()
+        public async Task<SampServerRulesData> GetServerRules()
         {
-            byte[] szReceive = SendSocketToServer(serverRulesPacketType);
+            byte[] szReceive = await SendSocketToServer(serverRulesPacketType);
             var sampServerRulesData = new SampServerRulesData();
 
             using (var stream = new MemoryStream(szReceive))
