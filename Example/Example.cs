@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
+using SampQueryApi;
 
-namespace SampQueryApi
+namespace SampQueryExample
 {
     class Tests
     {
@@ -15,14 +16,14 @@ namespace SampQueryApi
             var api = new SampQuery(host, port);
 
             Console.WriteLine("Information" + Environment.NewLine);
-            SampServerInfoData serverInfo = await api.GetServerInfo();
+            SampServerInfoData serverInfo = await api.GetServerInfoAsync();
             PropertyInfo[] sI_properties = serverInfo.GetType().GetProperties();
             foreach (PropertyInfo property in sI_properties)
             {
                 Console.WriteLine($"{property.Name}:\t\t\t{property.GetValue(serverInfo)}");
             }
 
-            SampServerRulesData sampServerRulesData = await api.GetServerRules();
+            SampServerRulesData sampServerRulesData = await api.GetServerRulesAsync();
 
             Console.WriteLine(Environment.NewLine + "Rules" + Environment.NewLine);
             PropertyInfo[] sR_properties = sampServerRulesData.GetType().GetProperties();
@@ -33,7 +34,7 @@ namespace SampQueryApi
 
             Console.WriteLine(Environment.NewLine + "Players" + Environment.NewLine);
 
-            List<SampServerPlayerData> serverPlayersInfo = await api.GetServerPlayers();
+            IEnumerable<SampServerPlayerData> serverPlayersInfo = await api.GetServerPlayersAsync();
             Console.WriteLine("ID | Name | Score | Ping\n");
 
             foreach (SampServerPlayerData player in serverPlayersInfo)
@@ -41,15 +42,11 @@ namespace SampQueryApi
                 Console.WriteLine($"{player.PlayerId} | {player.PlayerName} | {player.PlayerScore} | {player.PlayerPing}");
             }
 
-            string lIp = "127.0.0.1";
-            ushort lPort = 7777;
 
-            var lApi = new SampQuery(lIp, lPort, "changeme");
+            var lApi = new SampQuery("one.monser.ru", 7777, "hehe");
 
-            foreach (var items in lApi.SendRconCommand("banip 255.255.255.255"))
-            {
-                Console.WriteLine(items);
-            }
+            string response = lApi.SendRconCommand("banip 255.255.255.255");
+            Console.WriteLine(response);
         }
     }
 }
