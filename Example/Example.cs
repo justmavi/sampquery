@@ -10,7 +10,7 @@ namespace SampQueryExample
     {
         static async Task Main(string[] args)
         {
-            string host = "glow-dm.ru";
+            string host = "localhost";
             ushort port = 7777;
 
             var api = new SampQuery(host, port);
