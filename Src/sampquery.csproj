@@ -13,7 +13,6 @@
     <NeutralLanguage>en-US</NeutralLanguage>
     <Title>SAMPQuery</Title>
     <PackageTags>samp;sampquery;sampapi;</PackageTags>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
