@@ -1,5 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <IsPackable>false</IsPackable>
 
   <ItemGroup>
     <ProjectReference Include="..\Src\SampQuery.csproj" />
@@ -7,6 +6,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
+    <IsPackable>false</IsPackable>
     <TargetFrameworks>net6;net5;netcoreapp3.1</TargetFrameworks>
   </PropertyGroup>
 
