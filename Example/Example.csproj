@@ -1,4 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
+  <IsPackable>false</IsPackable>
 
   <ItemGroup>
     <ProjectReference Include="..\Src\SampQuery.csproj" />

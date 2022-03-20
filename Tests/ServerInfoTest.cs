@@ -13,23 +13,23 @@ namespace Tests
         [Test]
         [TestCase(SERVER_HOSTNAME, SERVER_PORT)]
         [TestCase(SERVER_IP, SERVER_PORT)]
-        public void GetServerInfo_Returns_SampServerInfoDataInstance(string hostname, ushort port)
+        public void GetServerInfo_Returns_ServerInfoInstance(string hostname, ushort port)
         {   
             var sampQuery = this.CreateDefaultSampQueryInstance(hostname, port);
             var response = sampQuery.GetServerInfo();
 
-            Assert.IsInstanceOf(typeof(SampServerInfoData), response);
+            Assert.IsInstanceOf(typeof(ServerInfo), response);
         }
 
         [Test]
         [TestCase(SERVER_HOSTNAME, SERVER_PORT)]
         [TestCase(SERVER_IP, SERVER_PORT)]
-        public async Task GetServerInfoAsync_Returns_SampServerInfoDataInstance(string hostname, ushort port)
+        public async Task GetServerInfoAsync_Returns_ServerInfoInstance(string hostname, ushort port)
         {   
             var sampQuery = this.CreateDefaultSampQueryInstance(hostname, port);
             var response = await sampQuery.GetServerInfoAsync();
 
-            Assert.IsInstanceOf(typeof(SampServerInfoData), response);
+            Assert.IsInstanceOf(typeof(ServerInfo), response);
         }
 
         private SampQuery CreateDefaultSampQueryInstance(string ip, ushort port)

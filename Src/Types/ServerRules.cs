@@ -2,7 +2,7 @@ using System;
 
 namespace SAMPQuery
 {
-    public class SampServerRulesData
+    public class ServerRules
     {
         /// <summary>
         /// Lagcomp

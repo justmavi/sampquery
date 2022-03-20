@@ -1,6 +1,6 @@
 namespace SAMPQuery 
 {
-    public class SampServerPlayerData
+    public class ServerPlayer
     {
         /// <summary>
         /// Player ID. Max value 255 (SA-MP feature (bug))
