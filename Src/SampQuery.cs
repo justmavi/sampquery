@@ -29,7 +29,8 @@ namespace SampQueryApi
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance); 
 
             if (!IPAddress.TryParse(host, out this.serverIp)) {
-                this.serverIp = Dns.GetHostAddresses(host).First();
+                int ipIdx = host == "localhost" ? 1 : 0; // Ignoring Ipv6
+                this.serverIp = Dns.GetHostAddresses(host)[ipIdx];
             }
 
             this.serverEndPoint = new IPEndPoint(this.serverIp, port);
@@ -79,19 +80,16 @@ namespace SampQueryApi
                     await this.serverSocket.SendToAsync(stream.ToArray(), SocketFlags.None, this.serverEndPoint);
                     EndPoint rawPoint = this.serverEndPoint;
                     var data = new byte[this.receiveArraySize];
-                    Console.WriteLine("Sended!!!");
-                    try 
-                    {
-                        var task = this.serverSocket.ReceiveFromAsync(data, SocketFlags.None, rawPoint);
-                        if (await Task.WhenAny(task, Task.Delay(this.timeoutMilliseconds)) != task) {
-                            throw new SocketException(10060);
-                        } 
-                    } 
-                    finally
+
+                    var task = this.serverSocket.ReceiveFromAsync(data, SocketFlags.None, rawPoint);
+
+                    if (await Task.WhenAny(task, Task.Delay(this.timeoutMilliseconds)) != task) 
                     {
                         this.serverSocket.Close();
-                    }
+                        throw new SocketException(10060);
+                    } 
 
+                    this.serverSocket.Close();
                     return data;
                 }
                 
