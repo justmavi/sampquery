@@ -8,7 +8,7 @@ using System.Reflection;
 using System.Globalization;
 using System.Threading.Tasks;
 
-namespace SampQueryApi
+namespace SAMPQuery
 {
     public class SampQuery
     {
@@ -151,7 +151,7 @@ namespace SampQueryApi
         /// <exception cref="System.ArgumentException">Thrown when command or RCON password is an empty string</exception>
         /// <exception cref="System.ArgumentNullException">Thrown when command or RCON password is null</exception>
         /// <exception cref="System.Net.Sockets.SocketException">Thrown when operation timed out</exception>
-        /// <exception cref="SampQueryApi.RconPasswordException">Thrown when RCON password is invalid (changeme or incorrect)</exception>
+        /// <exception cref="SAMPQuery.RconPasswordException">Thrown when RCON password is invalid (changeme or incorrect)</exception>
         public string SendRconCommand(string command)
         {
             Helpers.CheckNullOrEmpty(command, nameof(command));
@@ -174,7 +174,7 @@ namespace SampQueryApi
         /// <exception cref="System.ArgumentException">Thrown when command or RCON password is an empty string</exception>
         /// <exception cref="System.ArgumentNullException">Thrown when command or RCON password is null</exception>
         /// <exception cref="System.Net.Sockets.SocketException">Thrown when operation timed out</exception>
-        /// <exception cref="SampQueryApi.RconPasswordException">Thrown when RCON password is invalid (changeme or incorrect)</exception>
+        /// <exception cref="SAMPQuery.RconPasswordException">Thrown when RCON password is invalid (changeme or incorrect)</exception>
         public async Task<string> SendRconCommandAsync(string command)
         {
             Helpers.CheckNullOrEmpty(command, nameof(command));

@@ -1,6 +1,6 @@
 using System;
 
-namespace SampQueryApi
+namespace SAMPQuery
 {
     public class SampServerRulesData
     {

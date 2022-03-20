@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 using NUnit.Framework;
-using SampQueryApi;
+using SAMPQuery;
 
 namespace Tests
 {    

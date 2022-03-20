@@ -1,4 +1,4 @@
-namespace SampQueryApi 
+namespace SAMPQuery 
 {
 	public class RconPasswordException : System.Exception
 	{
