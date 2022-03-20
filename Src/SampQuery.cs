@@ -8,7 +8,7 @@ using System.Reflection;
 using System.Globalization;
 using System.Threading.Tasks;
 
-namespace SampQueryApi
+namespace SAMPQuery
 {
     public class SampQuery
     {
@@ -151,7 +151,7 @@ namespace SampQueryApi
         /// <exception cref="System.ArgumentException">Thrown when command or RCON password is an empty string</exception>
         /// <exception cref="System.ArgumentNullException">Thrown when command or RCON password is null</exception>
         /// <exception cref="System.Net.Sockets.SocketException">Thrown when operation timed out</exception>
-        /// <exception cref="SampQueryApi.RconPasswordException">Thrown when RCON password is invalid (changeme or incorrect)</exception>
+        /// <exception cref="SAMPQuery.RconPasswordException">Thrown when RCON password is invalid (changeme or incorrect)</exception>
         public string SendRconCommand(string command)
         {
             Helpers.CheckNullOrEmpty(command, nameof(command));
@@ -174,7 +174,7 @@ namespace SampQueryApi
         /// <exception cref="System.ArgumentException">Thrown when command or RCON password is an empty string</exception>
         /// <exception cref="System.ArgumentNullException">Thrown when command or RCON password is null</exception>
         /// <exception cref="System.Net.Sockets.SocketException">Thrown when operation timed out</exception>
-        /// <exception cref="SampQueryApi.RconPasswordException">Thrown when RCON password is invalid (changeme or incorrect)</exception>
+        /// <exception cref="SAMPQuery.RconPasswordException">Thrown when RCON password is invalid (changeme or incorrect)</exception>
         public async Task<string> SendRconCommandAsync(string command)
         {
             Helpers.CheckNullOrEmpty(command, nameof(command));
@@ -191,9 +191,9 @@ namespace SampQueryApi
         /// <summary>
         /// Get server players
         /// </summary>
-        /// <returns>An asynchronous task that completes with the collection of SampServerPlayerData instances</returns>
+        /// <returns>An asynchronous task that completes with the collection of ServerPlayer instances</returns>
         /// <exception cref="System.Net.Sockets.SocketException">Thrown when operation timed out</exception>
-        public async Task<IEnumerable<SampServerPlayerData>> GetServerPlayersAsync()
+        public async Task<IEnumerable<ServerPlayer>> GetServerPlayersAsync()
         {
             byte[] data = await SendSocketToServerAsync(ServerPacketTypes.Players);
             return CollectServerPlayersInfoFromByteArray(data);
@@ -201,9 +201,9 @@ namespace SampQueryApi
         /// <summary>
         /// Get server players
         /// </summary>
-        /// <returns>Collection of SampServerPlayerData instances</returns>
+        /// <returns>Collection of ServerPlayer instances</returns>
         /// <exception cref="System.Net.Sockets.SocketException">Thrown when operation timed out</exception>
-        public IEnumerable<SampServerPlayerData> GetServerPlayers()
+        public IEnumerable<ServerPlayer> GetServerPlayers()
         {
             byte[] data = SendSocketToServer(ServerPacketTypes.Players);
             return CollectServerPlayersInfoFromByteArray(data);
@@ -211,9 +211,9 @@ namespace SampQueryApi
         /// <summary>
         /// Get information about server
         /// </summary>
-        /// <returns>An asynchronous task that completes with an instance of SampServerPlayerData</returns>
+        /// <returns>An asynchronous task that completes with an instance of ServerPlayer</returns>
         /// <exception cref="System.Net.Sockets.SocketException">Thrown when operation timed out</exception>
-        public async Task<SampServerInfoData> GetServerInfoAsync()
+        public async Task<ServerInfo> GetServerInfoAsync()
         {
             byte[] data = await SendSocketToServerAsync(ServerPacketTypes.Info);
             return CollectServerInfoFromByteArray(data);
@@ -221,9 +221,9 @@ namespace SampQueryApi
         /// <summary>
         /// Get information about server
         /// </summary>
-        /// <returns>An instance of SampServerPlayerData</returns>
+        /// <returns>An instance of ServerPlayer</returns>
         /// <exception cref="System.Net.Sockets.SocketException">Thrown when operation timed out</exception>
-        public SampServerInfoData GetServerInfo()
+        public ServerInfo GetServerInfo()
         {
             byte[] data = SendSocketToServer(ServerPacketTypes.Info);
             return CollectServerInfoFromByteArray(data);
@@ -231,9 +231,9 @@ namespace SampQueryApi
         /// <summary>
         /// Get server rules
         /// </summary>
-        /// <returns>An asynchronous task that completes with an instance of SampServerRulesData</returns>
+        /// <returns>An asynchronous task that completes with an instance of ServerRules</returns>
         /// <exception cref="System.Net.Sockets.SocketException">Thrown when operation timed out</exception>
-        public async Task<SampServerRulesData> GetServerRulesAsync()
+        public async Task<ServerRules> GetServerRulesAsync()
         {
             byte[] data = await SendSocketToServerAsync(ServerPacketTypes.Rules);
             return CollectServerRulesFromByteArray(data);
@@ -241,9 +241,9 @@ namespace SampQueryApi
         /// <summary>
         /// Get server rules
         /// </summary>
-        /// <returns>An instance of SampServerRulesData</returns>
+        /// <returns>An instance of ServerRules</returns>
         /// <exception cref="System.Net.Sockets.SocketException">Thrown when operation timed out</exception>
-        public SampServerRulesData GetServerRules()
+        public ServerRules GetServerRules()
         {
             byte[] data = SendSocketToServer(ServerPacketTypes.Rules);
             return CollectServerRulesFromByteArray(data);
@@ -266,8 +266,8 @@ namespace SampQueryApi
                 }
             }
         }
-        private IEnumerable<SampServerPlayerData> CollectServerPlayersInfoFromByteArray(byte[] data) {
-            List<SampServerPlayerData> returnData = new List<SampServerPlayerData>();
+        private IEnumerable<ServerPlayer> CollectServerPlayersInfoFromByteArray(byte[] data) {
+            List<ServerPlayer> returnData = new List<ServerPlayer>();
 
             using(var stream = new MemoryStream(data))
             {
@@ -278,7 +278,7 @@ namespace SampQueryApi
 
                     for (int i = 0, iTotalPlayers = read.ReadInt16(); i < iTotalPlayers; i++)
                     {
-                        returnData.Add(new SampServerPlayerData
+                        returnData.Add(new ServerPlayer
                         {
                             PlayerId = Convert.ToByte(read.ReadByte()),
                             PlayerName = new string(read.ReadChars(read.ReadByte())),
@@ -291,7 +291,7 @@ namespace SampQueryApi
 
             return returnData;
         }
-        private SampServerInfoData CollectServerInfoFromByteArray(byte[] data) {
+        private ServerInfo CollectServerInfoFromByteArray(byte[] data) {
             using (var stream = new MemoryStream(data))
             {
                 using (BinaryReader read = new BinaryReader(stream, Encoding.GetEncoding(1251)))
@@ -299,7 +299,7 @@ namespace SampQueryApi
                     read.ReadBytes(10);
                     read.ReadChar();
 
-                    return new SampServerInfoData
+                    return new ServerInfo
                     {
                         Password = Convert.ToBoolean(read.ReadByte()),
                         Players = read.ReadUInt16(),
@@ -314,8 +314,8 @@ namespace SampQueryApi
                 }
             }
         }
-        private SampServerRulesData CollectServerRulesFromByteArray(byte[] data) {
-            var sampServerRulesData = new SampServerRulesData();
+        private ServerRules CollectServerRulesFromByteArray(byte[] data) {
+            var sampServerRulesData = new ServerRules();
 
             using (var stream = new MemoryStream(data))
             {

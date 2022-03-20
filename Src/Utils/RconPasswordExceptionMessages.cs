@@ -1,4 +1,4 @@
-namespace SampQueryApi
+namespace SAMPQuery
 {
     public static class RconPasswordExceptionMessages
     {

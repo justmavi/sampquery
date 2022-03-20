@@ -1,8 +1,8 @@
 using System;
 
-namespace SampQueryApi
+namespace SAMPQuery
 {
-    public class SampServerRulesData
+    public class ServerRules
     {
         /// <summary>
         /// Lagcomp

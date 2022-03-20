@@ -1,6 +1,6 @@
-namespace SampQueryApi
+namespace SAMPQuery
 {
-    public class SampServerInfoData
+    public class ServerInfo
     {
         /// <summary>
         /// Hostname

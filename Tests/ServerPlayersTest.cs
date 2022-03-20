@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 using NUnit.Framework;
-using SampQueryApi;
+using SAMPQuery;
 
 namespace Tests
 {
@@ -14,23 +14,23 @@ namespace Tests
         [Test]
         [TestCase(SERVER_HOSTNAME, SERVER_PORT)]
         [TestCase(SERVER_IP, SERVER_PORT)]
-        public void GetServerPlayers_Returns_CollectionOfSampServerPlayerDataInstances(string hostname, ushort port)
+        public void GetServerPlayers_Returns_CollectionOfServerPlayerInstances(string hostname, ushort port)
         {   
             var sampQuery = this.CreateDefaultSampQueryInstance(hostname, port);
             var response = sampQuery.GetServerPlayers();
 
-            CollectionAssert.AllItemsAreInstancesOfType(response, typeof(SampServerPlayerData));
+            CollectionAssert.AllItemsAreInstancesOfType(response, typeof(ServerPlayer));
         }
 
         [Test]
         [TestCase(SERVER_HOSTNAME, SERVER_PORT)]
         [TestCase(SERVER_IP, SERVER_PORT)]
-        public async Task GetServerPlayersAsync_Returns_CollectionOfSampServerPlayerDataInstances(string hostname, ushort port)
+        public async Task GetServerPlayersAsync_Returns_CollectionOfServerPlayerInstances(string hostname, ushort port)
         {   
             var sampQuery = this.CreateDefaultSampQueryInstance(hostname, port);
             var response = await sampQuery.GetServerPlayersAsync();
 
-            CollectionAssert.AllItemsAreInstancesOfType(response, typeof(SampServerPlayerData));
+            CollectionAssert.AllItemsAreInstancesOfType(response, typeof(ServerPlayer));
         }
         
         private SampQuery CreateDefaultSampQueryInstance(string ip, ushort port)
