@@ -10,8 +10,8 @@ namespace SampQueryExample
     {
         static async Task Main(string[] args)
         {
-            string host = "glow-dm.ru";
-            ushort port = 6666;
+            string host = "localhost";
+            ushort port = 7777;
 
             var api = new SampQuery(host, port);
 
@@ -42,19 +42,10 @@ namespace SampQueryExample
                 Console.WriteLine($"{player.PlayerId} | {player.PlayerName} | {player.PlayerScore} | {player.PlayerPing}");
             }
 
-            for (int i = 0; i < 2; i++) 
-            {
-                try {
-                    var lApi = new SampQuery("one.monser.ru", 7777, "hehe");
+            var lApi = new SampQuery("localhost", 7777, "hehe");
 
-                    string response = lApi.SendRconCommand("banip 255.255.255.255");
-                    Console.WriteLine(response);
-                } 
-                catch (Exception ex) 
-                {
-                    Console.WriteLine(ex);
-                }
-            }
+            string response = lApi.SendRconCommand("echo hi");
+            Console.WriteLine(response);
         }
     }
 }
