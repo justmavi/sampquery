@@ -1,12 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\Src\sampquery.csproj" />
+    <ProjectReference Include="..\Src\SampQuery.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFrameworks>net6;net5;netcoreapp3.1</TargetFrameworks>
   </PropertyGroup>
 
 </Project>
