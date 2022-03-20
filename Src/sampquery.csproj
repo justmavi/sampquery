@@ -7,15 +7,25 @@
     <Authors>justmavi</Authors>
     <Company>AV Production</Company>
     <Product>SAMPQuery</Product>
-    <Description>SAMPQuery is a class for querying to SAMP servers for .NET</Description>
-    <Copyright>Copyright © justmavi 2022</Copyright>
-    <Summary>SAMPQuery is a class for querying to SAMP servers for .NET</Summary>
     <NeutralLanguage>en-US</NeutralLanguage>
+    <Description>SAMPQuery is a class for querying to SAMP servers for .NET</Description>
+    <Summary>SAMPQuery is a class for querying to SAMP servers for .NET</Summary>
+    <Copyright>Copyright © justmavi 2022</Copyright>
     <Title>SAMPQuery</Title>
     <PackageTags>samp;sampquery;sampapi;</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/justmavi/sampquery.git</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="System.Text.Encoding.CodePages" Version="6.0.0" />
+    <Content Include="../README.md">
+      <Pack>true</Pack>
+      <PackagePath>README.md</PackagePath>
+    </Content>
+    <Content Include="../LICENSE">
+      <Pack>true</Pack>
+      <PackagePath>LICENSE</PackagePath>
+    </Content>
   </ItemGroup>
 </Project>
