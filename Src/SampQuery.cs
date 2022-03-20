@@ -48,11 +48,7 @@ namespace SampQueryApi
 
         private async Task<byte[]> SendSocketToServerAsync(char packetType, string cmd = null)
         {
-            this.serverSocket = new Socket(this.serverEndPoint.AddressFamily, SocketType.Dgram, ProtocolType.Udp)
-            {
-                SendTimeout = this.timeoutMilliseconds,
-                ReceiveTimeout = this.timeoutMilliseconds
-            };
+            this.serverSocket = new Socket(this.serverEndPoint.AddressFamily, SocketType.Dgram, ProtocolType.Udp);
 
             using(var stream = new MemoryStream())
             {
@@ -81,13 +77,21 @@ namespace SampQueryApi
                     this.transmitMS = DateTime.Now; 
 
                     await this.serverSocket.SendToAsync(stream.ToArray(), SocketFlags.None, this.serverEndPoint);
-
                     EndPoint rawPoint = this.serverEndPoint;
                     var data = new byte[this.receiveArraySize];
+                    Console.WriteLine("Sended!!!");
+                    try 
+                    {
+                        var task = this.serverSocket.ReceiveFromAsync(data, SocketFlags.None, rawPoint);
+                        if (await Task.WhenAny(task, Task.Delay(this.timeoutMilliseconds)) != task) {
+                            throw new SocketException(10060);
+                        } 
+                    } 
+                    finally
+                    {
+                        this.serverSocket.Close();
+                    }
 
-                    await this.serverSocket.ReceiveFromAsync(data, SocketFlags.None, rawPoint);
-
-                    this.serverSocket.Close();
                     return data;
                 }
                 
