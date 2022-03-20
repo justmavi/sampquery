@@ -143,6 +143,15 @@ namespace SampQueryApi
             }
             
         }
+        /// <summary>
+        /// Execute RCON command
+        /// </summary>
+        /// <param name="command">Command name. See https://sampwiki.blast.hk/wiki/Controlling_Your_Server#RCON_Commands</param>
+        /// <returns>Server response</returns>
+        /// <exception cref="System.ArgumentException">Thrown when command or RCON password is an empty string</exception>
+        /// <exception cref="System.ArgumentNullException">Thrown when command or RCON password is null</exception>
+        /// <exception cref="System.Net.Sockets.SocketException">Thrown when operation timed out</exception>
+        /// <exception cref="SampQueryApi.RconPasswordException">Thrown when RCON password is invalid (changeme or incorrect)</exception>
         public string SendRconCommand(string command)
         {
             Helpers.CheckNullOrEmpty(command, nameof(command));
@@ -156,6 +165,16 @@ namespace SampQueryApi
 
             return response;
         }
+
+        /// <summary>
+        /// Execute RCON command
+        /// </summary>
+        /// <param name="command">Command name. See https://sampwiki.blast.hk/wiki/Controlling_Your_Server#RCON_Commands</param>
+        /// <returns>An asynchronous task that completes with the server response</returns>
+        /// <exception cref="System.ArgumentException">Thrown when command or RCON password is an empty string</exception>
+        /// <exception cref="System.ArgumentNullException">Thrown when command or RCON password is null</exception>
+        /// <exception cref="System.Net.Sockets.SocketException">Thrown when operation timed out</exception>
+        /// <exception cref="SampQueryApi.RconPasswordException">Thrown when RCON password is invalid (changeme or incorrect)</exception>
         public async Task<string> SendRconCommandAsync(string command)
         {
             Helpers.CheckNullOrEmpty(command, nameof(command));
@@ -169,32 +188,61 @@ namespace SampQueryApi
 
             return response;
         }
+        /// <summary>
+        /// Get server players
+        /// </summary>
+        /// <returns>An asynchronous task that completes with the collection of SampServerPlayerData instances</returns>
+        /// <exception cref="System.Net.Sockets.SocketException">Thrown when operation timed out</exception>
         public async Task<IEnumerable<SampServerPlayerData>> GetServerPlayersAsync()
         {
             byte[] data = await SendSocketToServerAsync(ServerPacketTypes.Players);
             return CollectServerPlayersInfoFromByteArray(data);
         }
-        public async Task<SampServerInfoData> GetServerInfoAsync()
-        {
-            byte[] data = await SendSocketToServerAsync(ServerPacketTypes.Info);
-            return CollectServerInfoFromByteArray(data);
-        }
-        public async Task<SampServerRulesData> GetServerRulesAsync()
-        {
-            byte[] data = await SendSocketToServerAsync(ServerPacketTypes.Rules);
-            return CollectServerRulesFromByteArray(data);
-        }
-
+        /// <summary>
+        /// Get server players
+        /// </summary>
+        /// <returns>Collection of SampServerPlayerData instances</returns>
+        /// <exception cref="System.Net.Sockets.SocketException">Thrown when operation timed out</exception>
         public IEnumerable<SampServerPlayerData> GetServerPlayers()
         {
             byte[] data = SendSocketToServer(ServerPacketTypes.Players);
             return CollectServerPlayersInfoFromByteArray(data);
         }
+        /// <summary>
+        /// Get information about server
+        /// </summary>
+        /// <returns>An asynchronous task that completes with an instance of SampServerPlayerData</returns>
+        /// <exception cref="System.Net.Sockets.SocketException">Thrown when operation timed out</exception>
+        public async Task<SampServerInfoData> GetServerInfoAsync()
+        {
+            byte[] data = await SendSocketToServerAsync(ServerPacketTypes.Info);
+            return CollectServerInfoFromByteArray(data);
+        }
+        /// <summary>
+        /// Get information about server
+        /// </summary>
+        /// <returns>An instance of SampServerPlayerData</returns>
+        /// <exception cref="System.Net.Sockets.SocketException">Thrown when operation timed out</exception>
         public SampServerInfoData GetServerInfo()
         {
             byte[] data = SendSocketToServer(ServerPacketTypes.Info);
             return CollectServerInfoFromByteArray(data);
         }
+        /// <summary>
+        /// Get server rules
+        /// </summary>
+        /// <returns>An asynchronous task that completes with an instance of SampServerRulesData</returns>
+        /// <exception cref="System.Net.Sockets.SocketException">Thrown when operation timed out</exception>
+        public async Task<SampServerRulesData> GetServerRulesAsync()
+        {
+            byte[] data = await SendSocketToServerAsync(ServerPacketTypes.Rules);
+            return CollectServerRulesFromByteArray(data);
+        }
+        /// <summary>
+        /// Get server rules
+        /// </summary>
+        /// <returns>An instance of SampServerRulesData</returns>
+        /// <exception cref="System.Net.Sockets.SocketException">Thrown when operation timed out</exception>
         public SampServerRulesData GetServerRules()
         {
             byte[] data = SendSocketToServer(ServerPacketTypes.Rules);
