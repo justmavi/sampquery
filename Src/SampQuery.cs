@@ -86,7 +86,7 @@ namespace SampQueryApi
                     if (await Task.WhenAny(task, Task.Delay(this.timeoutMilliseconds)) != task) 
                     {
                         this.serverSocket.Close();
-                        throw new SocketException(10060);
+                        throw new SocketException(10060); // Operation timed out
                     } 
 
                     this.serverSocket.Close();
