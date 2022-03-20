@@ -1,5 +1,4 @@
 using System.Threading.Tasks;
-using System.Collections.Generic;
 using NUnit.Framework;
 using SampQueryApi;
 
@@ -8,30 +7,36 @@ namespace Tests
     // This test may fail if more than 100 players are playing on the server!!!
     public class ServerPlayersTest
     {
-        private SampQuery sampQuery;
+        const string SERVER_HOSTNAME = "glow-dm.ru";
+        const string SERVER_IP = "46.105.144.50";
+        const ushort SERVER_PORT = 6666;
 
-        [SetUp]
-        public void Setup()
+        [Test]
+        [TestCase(SERVER_HOSTNAME, SERVER_PORT)]
+        [TestCase(SERVER_IP, SERVER_PORT)]
+        public void GetServerPlayers_Returns_CollectionOfSampServerPlayerDataInstances(string hostname, ushort port)
+        {   
+            var sampQuery = this.CreateDefaultSampQueryInstance(hostname, port);
+            var response = sampQuery.GetServerPlayers();
+
+            CollectionAssert.AllItemsAreInstancesOfType(response, typeof(SampServerPlayerData));
+        }
+
+        [Test]
+        [TestCase(SERVER_HOSTNAME, SERVER_PORT)]
+        [TestCase(SERVER_IP, SERVER_PORT)]
+        public async Task GetServerPlayersAsync_Returns_CollectionOfSampServerPlayerDataInstances(string hostname, ushort port)
+        {   
+            var sampQuery = this.CreateDefaultSampQueryInstance(hostname, port);
+            var response = await sampQuery.GetServerPlayersAsync();
+
+            CollectionAssert.AllItemsAreInstancesOfType(response, typeof(SampServerPlayerData));
+        }
+        
+        private SampQuery CreateDefaultSampQueryInstance(string ip, ushort port)
         {
-            this.sampQuery = new SampQuery("glow-dm.ru", 6666);
-        }
-
-        [Test]
-        public void RequestServerPlayers_And_CheckResponse_Sync()
-        {   
-            var response = this.sampQuery.GetServerPlayers();
-
-            Assert.IsInstanceOf<IEnumerable<SampServerPlayerData>>(response);
-            CollectionAssert.AllItemsAreInstancesOfType(response, typeof(SampServerPlayerData));
-        }
-
-        [Test]
-        public async Task RequestServerPlayers_And_CheckResponse_Async()
-        {   
-            var response = await this.sampQuery.GetServerPlayersAsync();
-
-            Assert.IsInstanceOf<IEnumerable<SampServerPlayerData>>(response);
-            CollectionAssert.AllItemsAreInstancesOfType(response, typeof(SampServerPlayerData));
+            var sampQuery = new SampQuery(ip, port);
+            return sampQuery;
         }
     }
 }

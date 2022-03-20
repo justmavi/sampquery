@@ -142,27 +142,29 @@ namespace SampQueryApi
             }
             
         }
-        public string SendRconCommand(string cmd)
+        public string SendRconCommand(string command)
         {
-            if (string.IsNullOrEmpty(cmd)) throw new ArgumentNullException(nameof(cmd));
-            else if (this.password == "changeme") throw new RconPasswordException("\"changeme\" is not allowed RCON password.");
+            Helpers.CheckNullOrEmpty(command, nameof(command));
+            Helpers.CheckNullOrEmpty(this.password, nameof(this.password));
+            if (this.password == "changeme") throw new RconPasswordException(RconPasswordExceptionMessages.CHANGEME_NOT_ALLOWED);
 
-            byte[] data = SendSocketToServer(ServerPacketTypes.Rcon, cmd);
+            byte[] data = SendSocketToServer(ServerPacketTypes.Rcon, command);
             string response = CollectRconAnswerFromByteArray(data);
 
-            if (response == "Invalid RCON password.\n") throw new RconPasswordException(response);
+            if (response == "Invalid RCON password.\n") throw new RconPasswordException(RconPasswordExceptionMessages.INVALD_RCON_PASSWORD);
 
             return response;
         }
-        public async Task<string> SendRconCommandAsync(string cmd)
+        public async Task<string> SendRconCommandAsync(string command)
         {
-            if (string.IsNullOrEmpty(cmd)) throw new ArgumentNullException(nameof(cmd));
-            else if (this.password == "changeme") throw new RconPasswordException("\"changeme\" is not allowed RCON password.");
+            Helpers.CheckNullOrEmpty(command, nameof(command));
+            Helpers.CheckNullOrEmpty(this.password, nameof(this.password));
+            if (this.password == "changeme") throw new RconPasswordException(RconPasswordExceptionMessages.CHANGEME_NOT_ALLOWED);
 
-            byte[] data = await SendSocketToServerAsync(ServerPacketTypes.Rcon, cmd);
+            byte[] data = await SendSocketToServerAsync(ServerPacketTypes.Rcon, command);
             string response = CollectRconAnswerFromByteArray(data);
             
-            if (response == "Invalid RCON password.\n") throw new RconPasswordException(response);
+            if (response == "Invalid RCON password.\n") throw new RconPasswordException(RconPasswordExceptionMessages.INVALD_RCON_PASSWORD);
 
             return response;
         }

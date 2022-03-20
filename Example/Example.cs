@@ -42,11 +42,19 @@ namespace SampQueryExample
                 Console.WriteLine($"{player.PlayerId} | {player.PlayerName} | {player.PlayerScore} | {player.PlayerPing}");
             }
 
+            for (int i = 0; i < 2; i++) 
+            {
+                try {
+                    var lApi = new SampQuery("one.monser.ru", 7777, "hehe");
 
-            var lApi = new SampQuery("one.monser.ru", 7777, "hehe");
-
-            string response = lApi.SendRconCommand("banip 255.255.255.255");
-            Console.WriteLine(response);
+                    string response = lApi.SendRconCommand("banip 255.255.255.255");
+                    Console.WriteLine(response);
+                } 
+                catch (Exception ex) 
+                {
+                    Console.WriteLine(ex);
+                }
+            }
         }
     }
 }

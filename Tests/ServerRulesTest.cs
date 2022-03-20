@@ -6,28 +6,36 @@ namespace Tests
 {
     public class ServerRulesTest
     {
-        private SampQuery sampQuery;
+        const string SERVER_HOSTNAME = "glow-dm.ru";
+        const string SERVER_IP = "46.105.144.50";
+        const ushort SERVER_PORT = 6666;
 
-        [SetUp]
-        public void Setup()
+        [Test]
+        [TestCase(SERVER_HOSTNAME, SERVER_PORT)]
+        [TestCase(SERVER_IP, SERVER_PORT)]
+        public void GetServerRules_Returns_SampServerRulesDataInstance(string hostname, ushort port)
+        {   
+            var sampQuery = this.CreateDefaultSampQueryInstance(hostname, port);
+            var response = sampQuery.GetServerRules();
+
+            Assert.IsInstanceOf(typeof(SampServerRulesData), response);
+        }
+
+        [Test]
+        [TestCase(SERVER_HOSTNAME, SERVER_PORT)]
+        [TestCase(SERVER_IP, SERVER_PORT)]
+        public async Task GetServerRulesAsync_Returns_SampServerRulesDataInstance(string hostname, ushort port)
+        {   
+            var sampQuery = this.CreateDefaultSampQueryInstance(hostname, port);
+            var response = await sampQuery.GetServerRulesAsync();
+
+            Assert.IsInstanceOf(typeof(SampServerRulesData), response);
+        }
+
+        private SampQuery CreateDefaultSampQueryInstance(string ip, ushort port)
         {
-            this.sampQuery = new SampQuery("glow-dm.ru", 6666);
-        }
-
-        [Test]
-        public void RequestServerRules_And_CheckResponse_Sync()
-        {   
-            var response = this.sampQuery.GetServerRules();
-
-            Assert.IsInstanceOf(typeof(SampServerRulesData), response);
-        }
-
-        [Test]
-        public async Task RequestServerRules_And_CheckResponse_Async()
-        {   
-            var response = await this.sampQuery.GetServerRulesAsync();
-
-            Assert.IsInstanceOf(typeof(SampServerRulesData), response);
+            var sampQuery = new SampQuery(ip, port);
+            return sampQuery;
         }
     }
 }

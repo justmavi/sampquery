@@ -1,6 +1,6 @@
 namespace SampQueryApi 
 {
-    internal static class ServerPacketTypes 
+    public static class ServerPacketTypes 
     {
         public static char Info { get => 'i'; }
         public static char Rules { get => 'r'; }     
