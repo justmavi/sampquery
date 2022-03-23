@@ -185,7 +185,7 @@ Asynchronously executes RCON command
 
 ```csharp
  var server = new SampQuery("127.0.0.1", 7777, "helloworld");
- string answer = sampQuery.SendRconCommand("varlist");
+ string answer = await sampQuery.SendRconCommandAsync("varlist");
 
  Console.WriteLine($"Server says: {answer}");
 ```
