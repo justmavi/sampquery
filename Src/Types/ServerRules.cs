@@ -2,6 +2,9 @@ using System;
 
 namespace SAMPQuery
 {
+    /// <summary>
+    /// Server Rules
+    /// </summary>
     public class ServerRules
     {
         /// <summary>

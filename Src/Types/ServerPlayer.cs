@@ -1,5 +1,8 @@
 namespace SAMPQuery 
 {
+    /// <summary>
+    /// Player Information
+    /// </summary>
     public class ServerPlayer
     {
         /// <summary>

@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>net6;net5;netcoreapp3.1</TargetFrameworks>
     <PackageId>SAMPQuery</PackageId>
-    <Version>1.0.0</Version>
+    <Version>1.0.1</Version>
     <Authors>justmavi</Authors>
     <Company>AV Production</Company>
     <Product>SAMPQuery</Product>
@@ -15,6 +15,7 @@
     <PackageTags>samp;sampquery;sampapi;</PackageTags>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/justmavi/sampquery.git</RepositoryUrl>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

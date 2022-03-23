@@ -1,5 +1,8 @@
 namespace SAMPQuery
 {
+    /// <summary>
+    /// Server Information
+    /// </summary>
     public class ServerInfo
     {
         /// <summary>

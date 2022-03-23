@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace SAMPQuery
 {
+    /// <summary>
+    /// Implements the SAMPQuery interface.
+    /// </summary>
     public class SampQuery
     {
         private readonly int receiveArraySize = 2048;
@@ -23,6 +26,11 @@ namespace SAMPQuery
         private Socket serverSocket;
         private DateTime transmitMS;
 
+        /// <summary>
+        /// Initialize SAMPQuery
+        /// </summary>
+        /// <param name="host">Server hostname or IP address</param>
+        /// <param name="port">Server port</param>
         public SampQuery(string host, ushort port)
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance); 
@@ -39,11 +47,31 @@ namespace SAMPQuery
 
             this.socketHeader = "SAMP".ToCharArray();
         }
+        /// <summary>
+        /// Initialize SAMPQuery
+        /// </summary>
+        /// <param name="ip">Server IP address</param>
+        /// <param name="port">Server port</param>
+        /// <returns>SampQuery instance</returns>
         public SampQuery(IPAddress ip, ushort port) : this(ip.ToString(), port) { }
+        /// <summary>
+        /// Initialize SAMPQuery
+        /// </summary>
+        /// <param name="host">Server hostname or IP address</param>
+        /// <param name="port">Server port</param>
+        /// <param name="password">Server password</param>
+        /// <returns>SampQuery instance</returns>
         public SampQuery(string host, ushort port, string password) : this(host, port)
         {
             this.password = password;
         }
+        /// <summary>
+        /// Initialize SAMPQuery
+        /// </summary>
+        /// <param name="ip">Server IP address</param>
+        /// <param name="port">Server port</param>
+        /// <param name="password">Server password</param>
+        /// <returns>SampQuery instance</returns>
         public SampQuery(IPAddress ip, ushort port, string password) : this(ip.ToString(), port, password) {}
 
         private async Task<byte[]> SendSocketToServerAsync(char packetType, string cmd = null)

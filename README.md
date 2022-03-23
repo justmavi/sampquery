@@ -1,3 +1,5 @@
+[![NuGet version (SAMPQuery)](https://img.shields.io/badge/nuget-v1.0.1-informational)](https://www.nuget.org/packages/SAMPQuery/)
+
 # SAMPQuery
 
 SAMPQuery is a library that allows you to query SAMP servers for information about it and execute RCON commands. It includes encoding correction, hostname resolution, asynchronous calls and much more.
@@ -6,6 +8,7 @@ SAMPQuery is a library that allows you to query SAMP servers for information abo
 
 - [SAMPQuery](#sampquery)
   - [Table of Contents](#table-of-contents)
+  - [Installation](#installation)
   - [Usage](#usage)
   - [Documentation](#documentation)
     - [Constructor](#constructor)
@@ -22,6 +25,32 @@ SAMPQuery is a library that allows you to query SAMP servers for information abo
     - [ServerPlayer](#serverplayer)
   - [Gratitude](#gratitude)
   - [Stay in touch](#stay-in-touch)
+
+## Installation
+
+Package manager
+
+```nuget
+Install-Package SAMPQuery -Version 1.0.1
+```
+
+Terminal
+
+```shell
+$ dotnet add package SAMPQuery --version 1.0.1
+```
+
+Package Reference
+
+```xml
+<PackageReference Include="SAMPQuery" Version="1.0.1" />
+```
+
+Clone repository
+
+```shell
+$ git clone https://github.com/justmavi/sampquery.git
+```
 
 ## Usage
 
