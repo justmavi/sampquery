@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Reflection;
 using System.Globalization;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace SAMPQuery
@@ -33,11 +34,11 @@ namespace SAMPQuery
         /// <param name="port">Server port</param>
         public SampQuery(string host, ushort port)
         {
-            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance); 
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
             if (!IPAddress.TryParse(host, out this.serverIp)) {
-                int ipIdx = host == "localhost" ? 1 : 0; // Ignoring Ipv6
-                this.serverIp = Dns.GetHostAddresses(host)[ipIdx];
+                this.serverIp = Dns.GetHostEntry(host).AddressList
+                    .First(a => a.AddressFamily == AddressFamily.InterNetwork);
             }
 
             this.serverEndPoint = new IPEndPoint(this.serverIp, port);
@@ -102,7 +103,7 @@ namespace SAMPQuery
                         writer.Write(cmd.ToCharArray());
                     }
 
-                    this.transmitMS = DateTime.Now; 
+                    this.transmitMS = DateTime.Now;
 
                     await this.serverSocket.SendToAsync(stream.ToArray(), SocketFlags.None, this.serverEndPoint);
                     EndPoint rawPoint = this.serverEndPoint;
@@ -110,18 +111,18 @@ namespace SAMPQuery
 
                     var task = this.serverSocket.ReceiveFromAsync(data, SocketFlags.None, rawPoint);
 
-                    if (await Task.WhenAny(task, Task.Delay(this.timeoutMilliseconds)) != task) 
+                    if (await Task.WhenAny(task, Task.Delay(this.timeoutMilliseconds)) != task)
                     {
                         this.serverSocket.Close();
                         throw new SocketException(10060); // Operation timed out
-                    } 
+                    }
 
                     this.serverSocket.Close();
                     return data;
                 }
-                
+
             }
-            
+
         }
         private byte[] SendSocketToServer(char packetType, string cmd = null)
         {
@@ -155,7 +156,7 @@ namespace SAMPQuery
                         writer.Write(cmd.ToCharArray());
                     }
 
-                    this.transmitMS = DateTime.Now; 
+                    this.transmitMS = DateTime.Now;
 
                     this.serverSocket.SendTo(stream.ToArray(), SocketFlags.None, this.serverEndPoint);
 
@@ -167,9 +168,9 @@ namespace SAMPQuery
                     this.serverSocket.Close();
                     return szReceive;
                 }
-                
+
             }
-            
+
         }
         /// <summary>
         /// Execute RCON command
@@ -211,7 +212,7 @@ namespace SAMPQuery
 
             byte[] data = await SendSocketToServerAsync(ServerPacketTypes.Rcon, command);
             string response = CollectRconAnswerFromByteArray(data);
-            
+
             if (response == "Invalid RCON password.\n") throw new RconPasswordException(RconPasswordExceptionMessages.INVALD_RCON_PASSWORD);
 
             return response;
