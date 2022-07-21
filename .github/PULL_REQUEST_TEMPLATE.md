@@ -40,5 +40,5 @@
 - [ ] Documentation (README.md) has been updated to reflect this change
 
 <!--
-  🎉 Thank you for contributing and making TypeORM even better!
+  🎉 Thank you for contributing and making SAMPQuery even better!
 -->
