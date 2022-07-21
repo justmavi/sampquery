@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>net6;net5;netcoreapp3.1</TargetFrameworks>
     <PackageId>SAMPQuery</PackageId>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
     <Authors>justmavi</Authors>
     <Company>AV Production</Company>
     <Product>SAMPQuery</Product>
