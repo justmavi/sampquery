@@ -9,21 +9,21 @@ namespace SAMPQuery
         /// Information Packet
         /// </summary>
         /// <value>i</value>
-        public static char Info { get => 'i'; }
+        public static char Info => 'i';
         /// <summary>
         /// Rule packet
         /// </summary>
         /// <value>r</value>
-        public static char Rules { get => 'r'; } 
+        public static char Rules => 'r';
         /// <summary>
         /// Players packet
         /// </summary>
         /// <value>d</value>    
-        public static char Players { get => 'd'; }
+        public static char Players => 'd';
         /// <summary>
         /// RCON packet
         /// </summary>
         /// <value>x</value>
-        public static char Rcon { get => 'x'; }
+        public static char Rcon => 'x';
     }
 }

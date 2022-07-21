@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Src\sampquery.csproj" />
+    <ProjectReference Include="..\Src\SampQuery.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using SAMPQuery;
 
@@ -41,7 +42,8 @@ namespace SampQueryExample
             {
                 Console.WriteLine($"{player.PlayerId} | {player.PlayerName} | {player.PlayerScore} | {player.PlayerPing}");
             }
-            
+            Thread.Sleep(3000);
+
             // RCON
             var server = new SampQuery("localhost", 7777, "hehe");
 
