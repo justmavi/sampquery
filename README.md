@@ -31,19 +31,19 @@ SAMPQuery is a library that allows you to query SAMP servers for information abo
 Package manager
 
 ```nuget
-Install-Package SAMPQuery -Version 1.0.1
+Install-Package SAMPQuery -Version 1.0.2
 ```
 
 Terminal
 
 ```shell
-$ dotnet add package SAMPQuery --version 1.0.1
+$ dotnet add package SAMPQuery --version 1.0.2
 ```
 
 Package Reference
 
 ```xml
-<PackageReference Include="SAMPQuery" Version="1.0.1" />
+<PackageReference Include="SAMPQuery" Version="1.0.2" />
 ```
 
 Clone repository
