@@ -16,6 +16,11 @@ namespace SAMPQuery
     /// </summary>
     public class SampQuery
     {
+        /// <summary>
+        /// Default SAMP server port (always 7777)
+        /// </summary>
+        public static readonly ushort DefaultServerPort = 7777;
+
         private readonly int receiveArraySize = 2048;
         private readonly int timeoutMilliseconds = 5000;
         private readonly IPAddress serverIp;
@@ -56,6 +61,18 @@ namespace SAMPQuery
         /// <returns>SampQuery instance</returns>
         public SampQuery(IPAddress ip, ushort port) : this(ip.ToString(), port) { }
         /// <summary>
+        /// Initialize SAMPQuery with default 7777 port
+        /// </summary>
+        /// <param name="ip">Server IP address</param>
+        /// <returns>SampQuery instance</returns>
+        public SampQuery(IPAddress ip) : this(ip.ToString(), DefaultServerPort) { }
+        /// <summary>
+        /// Initialize SAMPQuery with default 7777 port or with port from given string (ip:port)
+        /// </summary>
+        /// <param name="ip">Server IP address</param>
+        /// <returns>SampQuery instance</returns>
+        public SampQuery(string ip) : this(ip.Split(':')[0], GetPortFromStringOrDefault(ip)) { }
+        /// <summary>
         /// Initialize SAMPQuery
         /// </summary>
         /// <param name="host">Server hostname or IP address</param>
@@ -74,6 +91,12 @@ namespace SAMPQuery
         /// <param name="password">Server password</param>
         /// <returns>SampQuery instance</returns>
         public SampQuery(IPAddress ip, ushort port, string password) : this(ip.ToString(), port, password) {}
+
+        private static ushort GetPortFromStringOrDefault(string ip)
+        {
+            var parts = ip.Split(':');
+            return parts.Length > 1 ? (string.IsNullOrWhiteSpace(parts[1]) ? DefaultServerPort : ushort.Parse(parts[1])) : DefaultServerPort;
+        }
 
         private async Task<byte[]> SendSocketToServerAsync(char packetType, string cmd = null)
         {
