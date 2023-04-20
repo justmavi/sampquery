@@ -1,4 +1,4 @@
-[![NuGet version (SAMPQuery)](https://img.shields.io/badge/nuget-v1.0.2-blue)](https://www.nuget.org/packages/SAMPQuery/)
+[![NuGet version (SAMPQuery)](https://img.shields.io/badge/nuget-1.1.0-blue)](https://www.nuget.org/packages/SAMPQuery/)
 
 # SAMPQuery
 
