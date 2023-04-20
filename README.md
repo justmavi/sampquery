@@ -31,19 +31,19 @@ SAMPQuery is a library that allows you to query SAMP servers for information abo
 Package manager
 
 ```nuget
-Install-Package SAMPQuery -Version 1.0.2
+Install-Package SAMPQuery -Version 1.1.0
 ```
 
 Terminal
 
 ```shell
-$ dotnet add package SAMPQuery --version 1.0.2
+$ dotnet add package SAMPQuery --version 1.1.0
 ```
 
 Package Reference
 
 ```xml
-<PackageReference Include="SAMPQuery" Version="1.0.2" />
+<PackageReference Include="SAMPQuery" Version="1.1.0" />
 ```
 
 Clone repository
@@ -80,6 +80,8 @@ The constructor also has overloads
 SampQuery(IPAddress ip, ushort port)
 SampQuery(string ip, ushort port, string password)
 SampQuery(IPAddress ip, ushort port, string password)
+SampQuery(IPAddress ip) // will be used default 7777 port
+SampQuery(string ip) // will be used default 7777 port or you can use "HOST:PORT" string
 ```
 
 Hostname is also allowed
