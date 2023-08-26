@@ -387,19 +387,15 @@ namespace SAMPQuery
                         if (property != null)
                         {
                             if (property.PropertyType == typeof(bool)) val = value == "On";
-                            else if (property.PropertyType == typeof(Uri)) val = new Uri("http://" + value, UriKind.Absolute);
+                            else if (property.PropertyType == typeof(Uri)) val = TryParseUri(value) ?? new Uri("http://sa-mp.com/", UriKind.Absolute);
                             else if (property.PropertyType == typeof(DateTime))
                             {
-                                TimeSpan substracT;
-                                try
+                                bool success = TimeSpan.TryParse(value, out TimeSpan parsedTime);
+                                if (!success)
                                 {
-                                    substracT = TimeSpan.Parse(value);
+                                    parsedTime = TimeSpan.FromHours(0);
                                 }
-                                catch
-                                {
-                                    substracT = TimeSpan.FromHours(0);
-                                }
-                                val = DateTime.Today.Add(substracT);
+                                val = DateTime.Today.Add(parsedTime);
                             }
                             else val = Convert.ChangeType(value, property.PropertyType, CultureInfo.InvariantCulture);
 
@@ -407,6 +403,24 @@ namespace SAMPQuery
                         }
                     }
                     return sampServerRulesData;
+                }
+            }
+        }
+
+        private static Uri TryParseUri(string value) {
+            try
+            {
+                return new Uri("http://" + value, UriKind.Absolute);
+            }
+            catch
+            {
+                try
+                {
+                    return new Uri(value, UriKind.Absolute);
+                }
+                catch
+                {
+                    return null;
                 }
             }
         }
