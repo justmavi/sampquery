@@ -388,7 +388,19 @@ namespace SAMPQuery
                         {
                             if (property.PropertyType == typeof(bool)) val = value == "On";
                             else if (property.PropertyType == typeof(Uri)) val = new Uri("http://" + value, UriKind.Absolute);
-                            else if (property.PropertyType == typeof(DateTime)) val = DateTime.Today.Add(TimeSpan.Parse(value));
+                            else if (property.PropertyType == typeof(DateTime))
+                            {
+                                TimeSpan substracT;
+                                try
+                                {
+                                    substracT = TimeSpan.Parse(value);
+                                }
+                                catch
+                                {
+                                    substracT = TimeSpan.FromHours(0);
+                                }
+                                val = DateTime.Today.Add(substracT);
+                            }
                             else val = Convert.ChangeType(value, property.PropertyType, CultureInfo.InvariantCulture);
 
                             property.SetValue(sampServerRulesData, val);
