@@ -387,7 +387,7 @@ namespace SAMPQuery
                         if (property != null)
                         {
                             if (property.PropertyType == typeof(bool)) val = value == "On";
-                            else if (property.PropertyType == typeof(Uri)) val = TryParseUri(value) ?? new Uri("http://sa-mp.com/", UriKind.Absolute);
+                            else if (property.PropertyType == typeof(Uri)) val = Helpers.TryParseWeburl(value);
                             else if (property.PropertyType == typeof(DateTime))
                             {
                                 bool success = TimeSpan.TryParse(value, out TimeSpan parsedTime);
@@ -403,24 +403,6 @@ namespace SAMPQuery
                         }
                     }
                     return sampServerRulesData;
-                }
-            }
-        }
-
-        private static Uri TryParseUri(string value) {
-            try
-            {
-                return new Uri("http://" + value, UriKind.Absolute);
-            }
-            catch
-            {
-                try
-                {
-                    return new Uri(value, UriKind.Absolute);
-                }
-                catch
-                {
-                    return null;
                 }
             }
         }
