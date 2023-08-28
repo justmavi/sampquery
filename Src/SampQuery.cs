@@ -387,7 +387,16 @@ namespace SAMPQuery
                         if (property != null)
                         {
                             if (property.PropertyType == typeof(bool)) val = value == "On";
-                            else if (property.PropertyType == typeof(Uri)) val = Helpers.TryParseWeburl(value);
+                            else if (property.PropertyType == typeof(Uri))
+                            {
+                                bool success = Uri.TryCreate(value, UriKind.Absolute, out Uri parsedUri);
+                                if (!success) 
+                                    success = Uri.TryCreate("http://" + value, UriKind.Absolute, out parsedUri);
+                                if (!success) 
+                                    parsedUri = new Uri("http://sa-mp.com/", UriKind.Absolute);
+
+                                val = parsedUri;
+                            }
                             else if (property.PropertyType == typeof(DateTime))
                             {
                                 bool success = TimeSpan.TryParse(value, out TimeSpan parsedTime);
