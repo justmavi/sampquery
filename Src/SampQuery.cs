@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using SAMPQuery.Utils;
 
 namespace SAMPQuery
 {
@@ -387,9 +388,9 @@ namespace SAMPQuery
                         if (property != null)
                         {
                             if (property.PropertyType == typeof(bool)) val = value == "On";
-                            else if (property.PropertyType == typeof(Uri)) val = Helpers.ParseWeburl(value);
+                            else if (property.PropertyType == typeof(Uri)) val = Helpers.ParseWebUrl(value);
                             else if (property.PropertyType == typeof(DateTime)) val = Helpers.ParseTime(value);
-                            else val = Helpers.TryParseByte(value, property);
+                            else val = Convert.ChangeType(value, property.PropertyType, CultureInfo.InvariantCulture);
 
                             property.SetValue(sampServerRulesData, val);
                         }

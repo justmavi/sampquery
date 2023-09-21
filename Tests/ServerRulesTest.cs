@@ -6,9 +6,9 @@ namespace Tests
 {
     public class ServerRulesTest
     {
-        const string SERVER_HOSTNAME = "glow-dm.ru";
-        const string SERVER_IP = "46.105.144.50";
-        const ushort SERVER_PORT = 6666;
+        const string SERVER_HOSTNAME = "eipq.am";
+        const string SERVER_IP = "85.208.51.76";
+        const ushort SERVER_PORT = 7777;
 
         [Test]
         [TestCase(SERVER_HOSTNAME, SERVER_PORT)]

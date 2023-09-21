@@ -6,8 +6,8 @@ namespace Tests
 {
     public class RconTest
     {
-        const string SERVER_HOSTNAME = "one.monser.ru";
-        const string SERVER_IP = "193.84.90.19";
+        const string SERVER_HOSTNAME = "eipq.am";
+        const string SERVER_IP = "85.208.51.76";
         const ushort SERVER_PORT = 7777;
         const string RCON_COMMAND = "echo Hello world!";
         const string CHANGEME = "changeme";

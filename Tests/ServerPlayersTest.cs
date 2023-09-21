@@ -7,9 +7,9 @@ namespace Tests
     // This test may fail if more than 100 players are playing on the server!!!
     public class ServerPlayersTest
     {
-        const string SERVER_HOSTNAME = "glow-dm.ru";
-        const string SERVER_IP = "46.105.144.50";
-        const ushort SERVER_PORT = 6666;
+        const string SERVER_HOSTNAME = "eipq.am";
+        const string SERVER_IP = "85.208.51.76";
+        const ushort SERVER_PORT = 7777;
 
         [Test]
         [TestCase(SERVER_HOSTNAME, SERVER_PORT)]

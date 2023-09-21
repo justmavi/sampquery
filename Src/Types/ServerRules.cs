@@ -30,7 +30,7 @@ namespace SAMPQuery
         /// <summary>
         /// ID of weather in server
         /// </summary>
-        public sbyte Weather { get; set; }
+        public int Weather { get; set; }
 
         /// <summary>
         /// Link to the server's web page
