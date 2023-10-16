@@ -1,4 +1,4 @@
-[![NuGet version (SAMPQuery)](https://img.shields.io/badge/nuget-1.1.0-blue)](https://www.nuget.org/packages/SAMPQuery/)
+[![NuGet version (SAMPQuery)](https://img.shields.io/badge/nuget-1.1.1-blue)](https://www.nuget.org/packages/SAMPQuery/)
 
 # SAMPQuery
 
@@ -31,19 +31,19 @@ SAMPQuery is a library that allows you to query SAMP servers for information abo
 Package manager
 
 ```nuget
-Install-Package SAMPQuery -Version 1.1.0
+Install-Package SAMPQuery -Version 1.1.1
 ```
 
 Terminal
 
 ```shell
-$ dotnet add package SAMPQuery --version 1.1.0
+$ dotnet add package SAMPQuery --version 1.1.1
 ```
 
 Package Reference
 
 ```xml
-<PackageReference Include="SAMPQuery" Version="1.1.0" />
+<PackageReference Include="SAMPQuery" Version="1.1.1" />
 ```
 
 Clone repository
