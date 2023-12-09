@@ -19,8 +19,29 @@ namespace Tests
         [TestCase(SERVER_IP, SERVER_PORT, ANY_RCON_PASSWORD, EMPTY_STRING)]
         public void SendRconCommand_PassingEmptyCommand_ThrowsArgumentException(string host, ushort port, string password, string command)
         {
-            var sampQuery = this.CreateDefaultSampQueryInstance(host, port, password);
-            TestDelegate func = () => sampQuery.SendRconCommand(command);
+
+            /* Unmerged change from project 'Tests (net7)'
+            Before:
+                        var sampQuery = this.CreateDefaultSampQueryInstance(host, port, password);
+            After:
+                        var sampQuery = RconTest.CreateDefaultSampQueryInstance(host, port, password);
+            */
+
+            /* Unmerged change from project 'Tests (net5)'
+            Before:
+                        var sampQuery = this.CreateDefaultSampQueryInstance(host, port, password);
+            After:
+                        var sampQuery = RconTest.CreateDefaultSampQueryInstance(host, port, password);
+            */
+
+            /* Unmerged change from project 'Tests (netcoreapp3.1)'
+            Before:
+                        var sampQuery = this.CreateDefaultSampQueryInstance(host, port, password);
+            After:
+                        var sampQuery = RconTest.CreateDefaultSampQueryInstance(host, port, password);
+            */
+            var sampQuery = CreateDefaultSampQueryInstance(host, port, password);
+            void func() => sampQuery.SendRconCommand(command);
 
             Assert.Throws(Is.TypeOf<ArgumentException>().And.Property("ParamName").EqualTo(nameof(command)), func);
 
@@ -31,8 +52,29 @@ namespace Tests
         [TestCase(SERVER_IP, SERVER_PORT, ANY_RCON_PASSWORD, null)]
         public void SendRconCommand_PassingNullCommand_ThrowsArgumentException(string host, ushort port, string password, string command)
         {
-            var sampQuery = this.CreateDefaultSampQueryInstance(host, port, password);
-            TestDelegate func = () => sampQuery.SendRconCommand(command);
+
+            /* Unmerged change from project 'Tests (net7)'
+            Before:
+                        var sampQuery = this.CreateDefaultSampQueryInstance(host, port, password);
+            After:
+                        var sampQuery = RconTest.CreateDefaultSampQueryInstance(host, port, password);
+            */
+
+            /* Unmerged change from project 'Tests (net5)'
+            Before:
+                        var sampQuery = this.CreateDefaultSampQueryInstance(host, port, password);
+            After:
+                        var sampQuery = RconTest.CreateDefaultSampQueryInstance(host, port, password);
+            */
+
+            /* Unmerged change from project 'Tests (netcoreapp3.1)'
+            Before:
+                        var sampQuery = this.CreateDefaultSampQueryInstance(host, port, password);
+            After:
+                        var sampQuery = RconTest.CreateDefaultSampQueryInstance(host, port, password);
+            */
+            var sampQuery = CreateDefaultSampQueryInstance(host, port, password);
+            void func() => sampQuery.SendRconCommand(command);
 
             Assert.Throws(Is.TypeOf<ArgumentNullException>().And.Property("ParamName").EqualTo(nameof(command)), func);
         }
@@ -42,8 +84,29 @@ namespace Tests
         [TestCase(SERVER_IP, SERVER_PORT, ANY_RCON_PASSWORD, EMPTY_STRING)]
         public void SendRconCommandAsync_PassingEmptyCommand_ThrowsArgumentException(string host, ushort port, string password, string command)
         {
-            var sampQuery = this.CreateDefaultSampQueryInstance(host, port, password);
-            AsyncTestDelegate func = async () => await sampQuery.SendRconCommandAsync(command);
+
+            /* Unmerged change from project 'Tests (net7)'
+            Before:
+                        var sampQuery = this.CreateDefaultSampQueryInstance(host, port, password);
+            After:
+                        var sampQuery = RconTest.CreateDefaultSampQueryInstance(host, port, password);
+            */
+
+            /* Unmerged change from project 'Tests (net5)'
+            Before:
+                        var sampQuery = this.CreateDefaultSampQueryInstance(host, port, password);
+            After:
+                        var sampQuery = RconTest.CreateDefaultSampQueryInstance(host, port, password);
+            */
+
+            /* Unmerged change from project 'Tests (netcoreapp3.1)'
+            Before:
+                        var sampQuery = this.CreateDefaultSampQueryInstance(host, port, password);
+            After:
+                        var sampQuery = RconTest.CreateDefaultSampQueryInstance(host, port, password);
+            */
+            var sampQuery = CreateDefaultSampQueryInstance(host, port, password);
+            async System.Threading.Tasks.Task func() => await sampQuery.SendRconCommandAsync(command);
 
             Assert.ThrowsAsync(Is.TypeOf<ArgumentException>().And.Property("ParamName").EqualTo(nameof(command)), func);
         }
@@ -53,8 +116,29 @@ namespace Tests
         [TestCase(SERVER_IP, SERVER_PORT, ANY_RCON_PASSWORD, null)]
         public void SendRconCommandAsync_PassingNullCommand_ThrowsArgumentException(string host, ushort port, string password, string command)
         {
-            var sampQuery = this.CreateDefaultSampQueryInstance(host, port, password);
-            AsyncTestDelegate func = async () => await sampQuery.SendRconCommandAsync(command);
+
+            /* Unmerged change from project 'Tests (net7)'
+            Before:
+                        var sampQuery = this.CreateDefaultSampQueryInstance(host, port, password);
+            After:
+                        var sampQuery = RconTest.CreateDefaultSampQueryInstance(host, port, password);
+            */
+
+            /* Unmerged change from project 'Tests (net5)'
+            Before:
+                        var sampQuery = this.CreateDefaultSampQueryInstance(host, port, password);
+            After:
+                        var sampQuery = RconTest.CreateDefaultSampQueryInstance(host, port, password);
+            */
+
+            /* Unmerged change from project 'Tests (netcoreapp3.1)'
+            Before:
+                        var sampQuery = this.CreateDefaultSampQueryInstance(host, port, password);
+            After:
+                        var sampQuery = RconTest.CreateDefaultSampQueryInstance(host, port, password);
+            */
+            var sampQuery = CreateDefaultSampQueryInstance(host, port, password);
+            async System.Threading.Tasks.Task func() => await sampQuery.SendRconCommandAsync(command);
 
             Assert.ThrowsAsync(Is.TypeOf<ArgumentNullException>().And.Property("ParamName").EqualTo(nameof(command)), func);
         }
@@ -64,8 +148,29 @@ namespace Tests
         [TestCase(SERVER_IP, SERVER_PORT, EMPTY_STRING, RCON_COMMAND)]
         public void SendRconCommand_PassingEmptyPassword_ThrowsArgumentException(string host, ushort port, string password, string command)
         {
-            var sampQuery = this.CreateDefaultSampQueryInstance(host, port, password);
-            TestDelegate func = () => sampQuery.SendRconCommand(command);
+
+            /* Unmerged change from project 'Tests (net7)'
+            Before:
+                        var sampQuery = this.CreateDefaultSampQueryInstance(host, port, password);
+            After:
+                        var sampQuery = RconTest.CreateDefaultSampQueryInstance(host, port, password);
+            */
+
+            /* Unmerged change from project 'Tests (net5)'
+            Before:
+                        var sampQuery = this.CreateDefaultSampQueryInstance(host, port, password);
+            After:
+                        var sampQuery = RconTest.CreateDefaultSampQueryInstance(host, port, password);
+            */
+
+            /* Unmerged change from project 'Tests (netcoreapp3.1)'
+            Before:
+                        var sampQuery = this.CreateDefaultSampQueryInstance(host, port, password);
+            After:
+                        var sampQuery = RconTest.CreateDefaultSampQueryInstance(host, port, password);
+            */
+            var sampQuery = CreateDefaultSampQueryInstance(host, port, password);
+            void func() => sampQuery.SendRconCommand(command);
 
             Assert.Throws(Is.TypeOf<ArgumentException>().And.Property("ParamName").EqualTo(nameof(password)), func);
         }
@@ -75,8 +180,29 @@ namespace Tests
         [TestCase(SERVER_IP, SERVER_PORT, null, RCON_COMMAND)]
         public void SendRconCommand_PassingNullPassword_ThrowsArgumentException(string host, ushort port, string password, string command)
         {
-            var sampQuery = this.CreateDefaultSampQueryInstance(host, port, password);
-            TestDelegate func = () => sampQuery.SendRconCommand(command);
+
+            /* Unmerged change from project 'Tests (net7)'
+            Before:
+                        var sampQuery = this.CreateDefaultSampQueryInstance(host, port, password);
+            After:
+                        var sampQuery = RconTest.CreateDefaultSampQueryInstance(host, port, password);
+            */
+
+            /* Unmerged change from project 'Tests (net5)'
+            Before:
+                        var sampQuery = this.CreateDefaultSampQueryInstance(host, port, password);
+            After:
+                        var sampQuery = RconTest.CreateDefaultSampQueryInstance(host, port, password);
+            */
+
+            /* Unmerged change from project 'Tests (netcoreapp3.1)'
+            Before:
+                        var sampQuery = this.CreateDefaultSampQueryInstance(host, port, password);
+            After:
+                        var sampQuery = RconTest.CreateDefaultSampQueryInstance(host, port, password);
+            */
+            var sampQuery = CreateDefaultSampQueryInstance(host, port, password);
+            void func() => sampQuery.SendRconCommand(command);
 
             Assert.Throws(Is.TypeOf<ArgumentNullException>().And.Property("ParamName").EqualTo(nameof(password)), func);
         }
@@ -86,8 +212,29 @@ namespace Tests
         [TestCase(SERVER_IP, SERVER_PORT, EMPTY_STRING, RCON_COMMAND)]
         public void SendRconCommandAsync_PassingEmptyPassword_ThrowsArgumentException(string host, ushort port, string password, string command)
         {
-            var sampQuery = this.CreateDefaultSampQueryInstance(host, port, password);
-            AsyncTestDelegate func = async () => await sampQuery.SendRconCommandAsync(command);
+
+            /* Unmerged change from project 'Tests (net7)'
+            Before:
+                        var sampQuery = this.CreateDefaultSampQueryInstance(host, port, password);
+            After:
+                        var sampQuery = RconTest.CreateDefaultSampQueryInstance(host, port, password);
+            */
+
+            /* Unmerged change from project 'Tests (net5)'
+            Before:
+                        var sampQuery = this.CreateDefaultSampQueryInstance(host, port, password);
+            After:
+                        var sampQuery = RconTest.CreateDefaultSampQueryInstance(host, port, password);
+            */
+
+            /* Unmerged change from project 'Tests (netcoreapp3.1)'
+            Before:
+                        var sampQuery = this.CreateDefaultSampQueryInstance(host, port, password);
+            After:
+                        var sampQuery = RconTest.CreateDefaultSampQueryInstance(host, port, password);
+            */
+            var sampQuery = CreateDefaultSampQueryInstance(host, port, password);
+            async System.Threading.Tasks.Task func() => await sampQuery.SendRconCommandAsync(command);
 
             Assert.ThrowsAsync(Is.TypeOf<ArgumentException>().And.Property("ParamName").EqualTo(nameof(password)), func);
         }
@@ -97,8 +244,29 @@ namespace Tests
         [TestCase(SERVER_IP, SERVER_PORT, null, RCON_COMMAND)]
         public void SendRconCommandAsync_PassingNullPassword_ThrowsArgumentException(string host, ushort port, string password, string command)
         {
-            var sampQuery = this.CreateDefaultSampQueryInstance(host, port, password);
-            AsyncTestDelegate func = async () => await sampQuery.SendRconCommandAsync(command);
+
+            /* Unmerged change from project 'Tests (net7)'
+            Before:
+                        var sampQuery = this.CreateDefaultSampQueryInstance(host, port, password);
+            After:
+                        var sampQuery = RconTest.CreateDefaultSampQueryInstance(host, port, password);
+            */
+
+            /* Unmerged change from project 'Tests (net5)'
+            Before:
+                        var sampQuery = this.CreateDefaultSampQueryInstance(host, port, password);
+            After:
+                        var sampQuery = RconTest.CreateDefaultSampQueryInstance(host, port, password);
+            */
+
+            /* Unmerged change from project 'Tests (netcoreapp3.1)'
+            Before:
+                        var sampQuery = this.CreateDefaultSampQueryInstance(host, port, password);
+            After:
+                        var sampQuery = RconTest.CreateDefaultSampQueryInstance(host, port, password);
+            */
+            var sampQuery = CreateDefaultSampQueryInstance(host, port, password);
+            async System.Threading.Tasks.Task func() => await sampQuery.SendRconCommandAsync(command);
 
             Assert.ThrowsAsync(Is.TypeOf<ArgumentNullException>().And.Property("ParamName").EqualTo(nameof(password)), func);
         }
@@ -110,8 +278,29 @@ namespace Tests
         [TestCase(SERVER_IP, SERVER_PORT, ANY_RCON_PASSWORD, RconPasswordExceptionMessages.INVALD_RCON_PASSWORD)]
         public void SendRconCommand_Throws_RconPasswordException(string host, ushort port, string password, string message)
         {
-            var sampQuery = this.CreateDefaultSampQueryInstance(host, port, password);
-            TestDelegate func = () => sampQuery.SendRconCommand(RCON_COMMAND);
+
+            /* Unmerged change from project 'Tests (net7)'
+            Before:
+                        var sampQuery = this.CreateDefaultSampQueryInstance(host, port, password);
+            After:
+                        var sampQuery = RconTest.CreateDefaultSampQueryInstance(host, port, password);
+            */
+
+            /* Unmerged change from project 'Tests (net5)'
+            Before:
+                        var sampQuery = this.CreateDefaultSampQueryInstance(host, port, password);
+            After:
+                        var sampQuery = RconTest.CreateDefaultSampQueryInstance(host, port, password);
+            */
+
+            /* Unmerged change from project 'Tests (netcoreapp3.1)'
+            Before:
+                        var sampQuery = this.CreateDefaultSampQueryInstance(host, port, password);
+            After:
+                        var sampQuery = RconTest.CreateDefaultSampQueryInstance(host, port, password);
+            */
+            var sampQuery = CreateDefaultSampQueryInstance(host, port, password);
+            void func() => sampQuery.SendRconCommand(RCON_COMMAND);
 
             Assert.Throws(Is.TypeOf<RconPasswordException>().And.Message.EqualTo(message), func);
         }
@@ -123,13 +312,34 @@ namespace Tests
         [TestCase(SERVER_IP, SERVER_PORT, ANY_RCON_PASSWORD, RconPasswordExceptionMessages.INVALD_RCON_PASSWORD)]
         public void SendRconCommandAsync_Throws_RconPasswordException(string host, ushort port, string password, string message)
         {
-            var sampQuery = this.CreateDefaultSampQueryInstance(host, port, password);
-            AsyncTestDelegate func = async () => await sampQuery.SendRconCommandAsync(RCON_COMMAND);
+
+            /* Unmerged change from project 'Tests (net7)'
+            Before:
+                        var sampQuery = this.CreateDefaultSampQueryInstance(host, port, password);
+            After:
+                        var sampQuery = RconTest.CreateDefaultSampQueryInstance(host, port, password);
+            */
+
+            /* Unmerged change from project 'Tests (net5)'
+            Before:
+                        var sampQuery = this.CreateDefaultSampQueryInstance(host, port, password);
+            After:
+                        var sampQuery = RconTest.CreateDefaultSampQueryInstance(host, port, password);
+            */
+
+            /* Unmerged change from project 'Tests (netcoreapp3.1)'
+            Before:
+                        var sampQuery = this.CreateDefaultSampQueryInstance(host, port, password);
+            After:
+                        var sampQuery = RconTest.CreateDefaultSampQueryInstance(host, port, password);
+            */
+            var sampQuery = CreateDefaultSampQueryInstance(host, port, password);
+            async System.Threading.Tasks.Task func() => await sampQuery.SendRconCommandAsync(RCON_COMMAND);
 
             Assert.ThrowsAsync(Is.TypeOf<RconPasswordException>().And.Message.EqualTo(message), func);
         }
 
-        private SampQuery CreateDefaultSampQueryInstance(string ip, ushort port, string password)
+        private static SampQuery CreateDefaultSampQueryInstance(string ip, ushort port, string password)
         {
             var sampQuery = new SampQuery(ip, port, password);
             return sampQuery;

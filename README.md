@@ -18,6 +18,7 @@ SAMPQuery is a library that allows you to query SAMP servers for information abo
     - [GetServerRulesAsync](#getserverrulesasync)
     - [GetServerPlayers](#getserverplayers)
     - [GetServerPlayersAsync](#getserverplayersasync)
+    - [GetServersAsync](#getserversasync)
     - [SendRconCommand](#sendrconcommand)
     - [SendRconCommandAsync](#sendrconcommandasync)
     - [ServerInfo](#serverinfo)
@@ -166,6 +167,58 @@ Asynchronously requests players online with detailed information (works up to 10
  {
      Console.WriteLine($"{player.PlayerId} | {player.PlayerName} | {player.PlayerScore} | {player.PlayerPing}");
  }
+```
+
+### GetServersAsync
+
+Asynchronously requests SAMonitor API information to get the online working servers from SAMP Launcher. 
+
+```csharp
+SampQuery.TimeoutMilliseconds = 500; // change this to recieve ping data faster, since some servers in SAMP has a spike of timeout for some reason.
+var serverList = await SampQuery.GetServersAsync();
+if (serverList == null)
+{
+    // can be internet problem or whatever.
+    Console.WriteLine("Failed to retrive server list.");
+    continue;
+}
+foreach (var server in serverList)
+{
+    try
+    {
+        SampQuery checkIPOfServer = new(server.IPAddressWithPort);
+        var listToWaitServerPing = await checkIPOfServer.GetServerInfoAsync();
+        if (listToWaitServerPing == null)
+        {
+            Console.WriteLine($"Is Locked: {server.Password} | Hostname: {server.HostName} | Players: {server.Players} / {server.MaxPlayers} | Ping: timeout | Mode: {server.GameMode} | Language: {server.Language}");
+            continue;
+        }
+        server.ServerPing = listToWaitServerPing.ServerPing;
+        Console.WriteLine($"Is Locked: {server.Password} | Hostname: {server.HostName} | Players: {server.Players} / {server.MaxPlayers} | Ping: {server.ServerPing} | Mode: {server.GameMode} | Language: {server.Language}");
+    }
+    catch
+    {
+        Console.WriteLine($"Is Locked: {server.Password} | Hostname: {server.HostName} | Players: {server.Players} / {server.MaxPlayers} | Ping: timeout | Mode: {server.GameMode} | Language: {server.Language}");
+    }
+}
+```
+
+You don't have to get ping if you don't want to, processing will speed up output of all possible online servers in SAMP Launcher.
+
+```csharp
+
+SampQuery.TimeoutMilliseconds = 5000; // default normal timeout. 
+var serverList = await SampQuery.GetServersAsync();
+if (serverList == null)
+{
+    Console.WriteLine("Failed to retrive server list.");
+    continue;
+}
+foreach (var server in serverList)
+{
+    Console.WriteLine($"Is Locked: {server.Password} | Hostname: {server.HostName} | Players: {server.Players} / {server.MaxPlayers} | Mode: {server.GameMode} | Language: {server.Language}");
+}
+
 ```
 
 **The maximum value of the player ID is 255. Two-byte identifiers are not supported here (SA-MP limit).**

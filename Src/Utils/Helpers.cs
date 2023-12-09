@@ -1,14 +1,16 @@
 using System;
 
-namespace SAMPQuery.Utils 
+namespace SAMPQuery.Utils
 {
     internal static class Helpers
     {
+        public const string LINK_GETALLSERVERS = "http://sam.markski.ar/api/GetAllServers";
+
         public static void CheckNullOrEmpty(string value, string parameterName)
         {
             if (value == null)
                 throw new ArgumentNullException(parameterName);
-        
+
             if (value.Length == 0)
                 throw new ArgumentException("Empty value not allowed", parameterName);
         }

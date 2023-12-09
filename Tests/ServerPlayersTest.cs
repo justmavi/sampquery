@@ -15,8 +15,29 @@ namespace Tests
         [TestCase(SERVER_HOSTNAME, SERVER_PORT)]
         [TestCase(SERVER_IP, SERVER_PORT)]
         public void GetServerPlayers_Returns_CollectionOfServerPlayerInstances(string hostname, ushort port)
-        {   
-            var sampQuery = this.CreateDefaultSampQueryInstance(hostname, port);
+        {
+
+            /* Unmerged change from project 'Tests (net7)'
+            Before:
+                        var sampQuery = this.CreateDefaultSampQueryInstance(hostname, port);
+            After:
+                        var sampQuery = ServerPlayersTest.CreateDefaultSampQueryInstance(hostname, port);
+            */
+
+            /* Unmerged change from project 'Tests (net5)'
+            Before:
+                        var sampQuery = this.CreateDefaultSampQueryInstance(hostname, port);
+            After:
+                        var sampQuery = ServerPlayersTest.CreateDefaultSampQueryInstance(hostname, port);
+            */
+
+            /* Unmerged change from project 'Tests (netcoreapp3.1)'
+            Before:
+                        var sampQuery = this.CreateDefaultSampQueryInstance(hostname, port);
+            After:
+                        var sampQuery = ServerPlayersTest.CreateDefaultSampQueryInstance(hostname, port);
+            */
+            var sampQuery = CreateDefaultSampQueryInstance(hostname, port);
             var response = sampQuery.GetServerPlayers();
 
             CollectionAssert.AllItemsAreInstancesOfType(response, typeof(ServerPlayer));
@@ -26,14 +47,35 @@ namespace Tests
         [TestCase(SERVER_HOSTNAME, SERVER_PORT)]
         [TestCase(SERVER_IP, SERVER_PORT)]
         public async Task GetServerPlayersAsync_Returns_CollectionOfServerPlayerInstances(string hostname, ushort port)
-        {   
-            var sampQuery = this.CreateDefaultSampQueryInstance(hostname, port);
+        {
+
+            /* Unmerged change from project 'Tests (net7)'
+            Before:
+                        var sampQuery = this.CreateDefaultSampQueryInstance(hostname, port);
+            After:
+                        var sampQuery = ServerPlayersTest.CreateDefaultSampQueryInstance(hostname, port);
+            */
+
+            /* Unmerged change from project 'Tests (net5)'
+            Before:
+                        var sampQuery = this.CreateDefaultSampQueryInstance(hostname, port);
+            After:
+                        var sampQuery = ServerPlayersTest.CreateDefaultSampQueryInstance(hostname, port);
+            */
+
+            /* Unmerged change from project 'Tests (netcoreapp3.1)'
+            Before:
+                        var sampQuery = this.CreateDefaultSampQueryInstance(hostname, port);
+            After:
+                        var sampQuery = ServerPlayersTest.CreateDefaultSampQueryInstance(hostname, port);
+            */
+            var sampQuery = CreateDefaultSampQueryInstance(hostname, port);
             var response = await sampQuery.GetServerPlayersAsync();
 
             CollectionAssert.AllItemsAreInstancesOfType(response, typeof(ServerPlayer));
         }
-        
-        private SampQuery CreateDefaultSampQueryInstance(string ip, ushort port)
+
+        private static SampQuery CreateDefaultSampQueryInstance(string ip, ushort port)
         {
             var sampQuery = new SampQuery(ip, port);
             return sampQuery;
