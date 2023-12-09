@@ -4,7 +4,7 @@ namespace SAMPQuery.Utils
 {
     internal static class Helpers
     {
-        public const string LINK_GETALLSERVERS = "http://sam.markski.ar/api/GetAllServers";
+        public const string LINK_GETALLSERVERS = "https://sam.markski.ar/api/GetFilteredServers?show_empty=0&order=player";
 
         public static void CheckNullOrEmpty(string value, string parameterName)
         {
