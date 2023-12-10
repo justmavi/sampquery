@@ -100,13 +100,13 @@ namespace SampQueryExample
                         try
                         {
                             SampQuery checkIPOfServer = new(server.IPAddressWithPort);
-                            var listToWaitServerPing = await checkIPOfServer.GetServerInfoAsync();
-                            if (listToWaitServerPing == null)
+                            var serverInfoAsync = await checkIPOfServer.GetServerInfoAsync();
+                            if (serverInfoAsync == null)
                             {
                                 Console.WriteLine($"Is Locked: {server.Password} | Hostname: {server.HostName} | Players: {server.Players} / {server.MaxPlayers} | Ping: timeout | Mode: {server.GameMode} | Language: {server.Language}");
                                 continue;
                             }
-                            server.ServerPing = listToWaitServerPing.ServerPing;
+                            server.ServerPing = serverInfoAsync.ServerPing;
                             Console.WriteLine($"Is Locked: {server.Password} | Hostname: {server.HostName} | Players: {server.Players} / {server.MaxPlayers} | Ping: {server.ServerPing} | Mode: {server.GameMode} | Language: {server.Language}");
                         }
                         catch
