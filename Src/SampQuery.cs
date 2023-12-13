@@ -21,11 +21,12 @@ namespace SAMPQuery
         /// Default SAMP server port (always 7777)
         /// </summary>
         public static readonly ushort DefaultServerPort = 7777;
+
         /// <summary>
         /// The TimeoutMilliseconds variable provides the flexibility to adjust the duration of waiting for a ping response.
         /// The default recommended value is 5 seconds, equivalent to 5000 milliseconds.
         /// </summary>
-        public static int TimeoutMilliseconds = 5000;
+        public int TimeoutMilliseconds { get; set; } = 5000; 
 
         private readonly int receiveArraySize = 2048;
         private readonly IPAddress serverIp;
