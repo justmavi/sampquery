@@ -22,8 +22,13 @@ namespace SAMPQuery
         /// </summary>
         public static readonly ushort DefaultServerPort = 7777;
 
+        /// <summary>
+        /// The TimeoutMilliseconds variable provides the flexibility to adjust the duration of waiting for a ping response.
+        /// The default recommended value is 5 seconds, equivalent to 5000 milliseconds.
+        /// </summary>
+        public int TimeoutMilliseconds { get; set; } = 5000; 
+
         private readonly int receiveArraySize = 2048;
-        private readonly int timeoutMilliseconds = 5000;
         private readonly IPAddress serverIp;
         private readonly ushort serverPort;
         private readonly string serverIpString;
@@ -135,7 +140,7 @@ namespace SAMPQuery
 
                     var task = this.serverSocket.ReceiveFromAsync(data, SocketFlags.None, rawPoint);
 
-                    if (await Task.WhenAny(task, Task.Delay(this.timeoutMilliseconds)) != task)
+                    if (await Task.WhenAny(task, Task.Delay(TimeoutMilliseconds)) != task)
                     {
                         this.serverSocket.Close();
                         throw new SocketException(10060); // Operation timed out
@@ -152,8 +157,8 @@ namespace SAMPQuery
         {
             this.serverSocket = new Socket(this.serverEndPoint.AddressFamily, SocketType.Dgram, ProtocolType.Udp)
             {
-                SendTimeout = this.timeoutMilliseconds,
-                ReceiveTimeout = this.timeoutMilliseconds
+                SendTimeout = TimeoutMilliseconds,
+                ReceiveTimeout = TimeoutMilliseconds
             };
 
             using(var stream = new MemoryStream())
