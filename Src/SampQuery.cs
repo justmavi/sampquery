@@ -272,6 +272,61 @@ namespace SAMPQuery
             return CollectServerInfoFromByteArray(data);
         }
         /// <summary>
+        /// Get wether the server software is open.mp or not
+        /// </summary>
+        /// <returns>An asynchronous task that completes with an instance of Bool</returns>
+        /// <exception cref="System.Net.Sockets.SocketException">Thrown when operation timed out</exception>
+        public bool GetServerIsOMP()
+        {
+            try
+            {
+                this.serverSocket = new Socket(this.serverEndPoint.AddressFamily, SocketType.Dgram, ProtocolType.Udp)
+                {
+                    SendTimeout = this.timeoutMilliseconds,
+                    ReceiveTimeout = this.timeoutMilliseconds
+                };
+
+                using var stream = new MemoryStream();
+                using var writer = new BinaryWriter(stream);
+
+                string[] splitIp = this.serverIpString.Split('.');
+
+                writer.Write(this.socketHeader);
+
+                for (sbyte i = 0; i < splitIp.Length; i++)
+                {
+                    writer.Write(Convert.ToByte(Convert.ToInt16(splitIp[i])));
+                }
+
+                writer.Write(this.serverPort);
+                // The packet requires 5 seemingly random characters at the end.
+                // Following the example code in open.mp's server list software, just use 5 'o' characters.
+                for (int i = 0; i < 5; i++)
+                {
+                    writer.Write('o');
+                }
+
+                this.transmitMS = DateTime.Now;
+
+                this.serverSocket.SendTo(stream.ToArray(), SocketFlags.None, this.serverEndPoint);
+
+                EndPoint rawPoint = this.serverEndPoint;
+                var szReceive = new byte[this.receiveArraySize];
+
+                this.serverSocket.ReceiveFrom(szReceive, SocketFlags.None, ref rawPoint);
+
+                this.serverSocket.Close();
+
+                return true;
+            }
+            catch
+            {
+                // timeout results in an exception.
+                // a timeout means the server is not open.mp
+                return false;
+            }
+        }
+        /// <summary>
         /// Get information about server
         /// </summary>
         /// <returns>An instance of ServerPlayer</returns>
