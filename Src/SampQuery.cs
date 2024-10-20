@@ -301,6 +301,7 @@ namespace SAMPQuery
             byte[] data = SendSocketToServer(ServerPacketTypes.Rules);
             return CollectServerRulesFromByteArray(data);
         }
+        
         private string CollectRconAnswerFromByteArray(byte[] data)
         {
             string result = string.Empty;
@@ -319,12 +320,14 @@ namespace SAMPQuery
                 }
             }
         }
-        private IEnumerable<ServerPlayer> CollectServerPlayersInfoFromByteArray(byte[] data) {
+
+        private IEnumerable<ServerPlayer> CollectServerPlayersInfoFromByteArray(byte[] data)
+        {
             List<ServerPlayer> returnData = new List<ServerPlayer>();
 
-            using(var stream = new MemoryStream(data))
+            using (var stream = new MemoryStream(data))
             {
-                using(BinaryReader read = new BinaryReader(stream))
+                using (BinaryReader read = new BinaryReader(stream))
                 {
                     read.ReadBytes(10);
                     read.ReadChar();
@@ -344,7 +347,9 @@ namespace SAMPQuery
 
             return returnData;
         }
-        private ServerInfo CollectServerInfoFromByteArray(byte[] data) {
+        
+        private ServerInfo CollectServerInfoFromByteArray(byte[] data)
+        {
             using (var stream = new MemoryStream(data))
             {
                 using (BinaryReader read = new BinaryReader(stream, Encoding.GetEncoding(1251)))
@@ -367,7 +372,9 @@ namespace SAMPQuery
                 }
             }
         }
-        private ServerRules CollectServerRulesFromByteArray(byte[] data) {
+        
+        private ServerRules CollectServerRulesFromByteArray(byte[] data)
+        {
             var sampServerRulesData = new ServerRules();
 
             using (var stream = new MemoryStream(data))
@@ -382,15 +389,15 @@ namespace SAMPQuery
 
                     for (int i = 0, iRules = read.ReadInt16(); i < iRules; i++)
                     {
-                        PropertyInfo property = sampServerRulesData.GetType().GetProperty(new string(read.ReadChars(read.ReadByte())).Replace(' ', '_'), BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+                        PropertyInfo? property = sampServerRulesData.GetType().GetProperty(new string(read.ReadChars(read.ReadByte())).Replace(' ', '_'), BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
                         value = new string(read.ReadChars(read.ReadByte()));
 
                         if (property != null)
                         {
                             if (property.PropertyType == typeof(bool)) val = value == "On";
-                            else if (property.PropertyType == typeof(Uri)) val = Helpers.ParseWebUrl(value);
+                            else if (property.PropertyType == typeof(Uri)) val = Helpers.ParseWeburl(value);
                             else if (property.PropertyType == typeof(DateTime)) val = Helpers.ParseTime(value);
-                            else val = Convert.ChangeType(value, property.PropertyType, CultureInfo.InvariantCulture);
+                            else val = Helpers.TryParseByte(value, property);
 
                             property.SetValue(sampServerRulesData, val);
                         }

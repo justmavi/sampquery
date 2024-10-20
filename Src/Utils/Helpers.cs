@@ -32,5 +32,19 @@ namespace SAMPQuery.Utils
 
             return DateTime.Today.Add(parsedTime);
         }
+
+        public static object TryParseByte(string value, PropertyInfo property)
+        {
+            try
+            {
+                return Convert.ChangeType(value, property.PropertyType, CultureInfo.InvariantCulture);
+            }
+            catch
+            {
+                // the value could not be parsed, try to return anything at all instead of crashing.
+                value = "0";
+                return Convert.ChangeType(value, property.PropertyType, CultureInfo.InvariantCulture);
+            }
+        }
     }
 }
