@@ -28,9 +28,9 @@ namespace SAMPQuery
         private readonly ushort serverPort;
         private readonly string serverIpString;
         private readonly IPEndPoint serverEndPoint;
-        private readonly string password;
+        private readonly string password = "";
         private readonly char[] socketHeader;
-        private Socket serverSocket;
+        private Socket? serverSocket = null;
         private DateTime transmitMS;
 
         /// <summary>
@@ -42,9 +42,16 @@ namespace SAMPQuery
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
-            if (!IPAddress.TryParse(host, out this.serverIp)) {
-                this.serverIp = Dns.GetHostEntry(host).AddressList
-                    .First(a => a.AddressFamily == AddressFamily.InterNetwork);
+            IPAddress? getAddr = null;
+
+            // if the given 'host' cannot be parsed as an IP Address, it might be a domain/hostname.
+            if (!IPAddress.TryParse(host, out getAddr))
+            {
+                serverIp = Dns.GetHostEntry(host).AddressList.First(a => a.AddressFamily == AddressFamily.InterNetwork);
+            }
+            else
+            {
+                serverIp = getAddr;
             }
 
             this.serverEndPoint = new IPEndPoint(this.serverIp, port);
@@ -99,7 +106,7 @@ namespace SAMPQuery
             return parts.Length > 1 ? (string.IsNullOrWhiteSpace(parts[1]) ? DefaultServerPort : ushort.Parse(parts[1])) : DefaultServerPort;
         }
 
-        private async Task<byte[]> SendSocketToServerAsync(char packetType, string cmd = null)
+        private async Task<byte[]> SendSocketToServerAsync(char packetType, string cmd = "")
         {
             this.serverSocket = new Socket(this.serverEndPoint.AddressFamily, SocketType.Dgram, ProtocolType.Udp);
 
@@ -148,7 +155,7 @@ namespace SAMPQuery
             }
 
         }
-        private byte[] SendSocketToServer(char packetType, string cmd = null)
+        private byte[] SendSocketToServer(char packetType, string cmd = "")
         {
             this.serverSocket = new Socket(this.serverEndPoint.AddressFamily, SocketType.Dgram, ProtocolType.Udp)
             {
@@ -156,9 +163,9 @@ namespace SAMPQuery
                 ReceiveTimeout = this.timeoutMilliseconds
             };
 
-            using(var stream = new MemoryStream())
+            using (var stream = new MemoryStream())
             {
-                using(var writer = new BinaryWriter(stream))
+                using (var writer = new BinaryWriter(stream))
                 {
                     string[] splitIp = this.serverIpString.Split('.');
 
@@ -289,32 +296,25 @@ namespace SAMPQuery
                 using var stream = new MemoryStream();
                 using var writer = new BinaryWriter(stream);
 
-                string[] splitIp = this.serverIpString.Split('.');
-
                 writer.Write(this.socketHeader);
 
-                for (sbyte i = 0; i < splitIp.Length; i++)
+                foreach (var ipPart in this.serverIpString.Split('.'))
                 {
-                    writer.Write(Convert.ToByte(Convert.ToInt16(splitIp[i])));
+                    writer.Write(Convert.ToByte(Convert.ToInt16(ipPart)));
                 }
 
                 writer.Write(this.serverPort);
-                // The packet requires 5 seemingly random characters at the end.
-                // Following the example code in open.mp's server list software, just use 5 'o' characters.
-                for (int i = 0; i < 5; i++)
-                {
-                    writer.Write('o');
-                }
+                // Write 5 'o' characters to follow the protocol
+                writer.Write(new string('o', 5).ToCharArray());
 
                 this.transmitMS = DateTime.Now;
 
                 this.serverSocket.SendTo(stream.ToArray(), SocketFlags.None, this.serverEndPoint);
 
-                EndPoint rawPoint = this.serverEndPoint;
-                var szReceive = new byte[this.receiveArraySize];
+                var receiveBuffer = new byte[this.receiveArraySize];
+                EndPoint remoteEndPoint = this.serverEndPoint;
 
-                this.serverSocket.ReceiveFrom(szReceive, SocketFlags.None, ref rawPoint);
-
+                this.serverSocket.ReceiveFrom(receiveBuffer, SocketFlags.None, ref remoteEndPoint);
                 this.serverSocket.Close();
 
                 return true;
@@ -450,7 +450,7 @@ namespace SAMPQuery
                         if (property != null)
                         {
                             if (property.PropertyType == typeof(bool)) val = value == "On";
-                            else if (property.PropertyType == typeof(Uri)) val = Helpers.ParseWeburl(value);
+                            else if (property.PropertyType == typeof(Uri)) val = Helpers.ParseWebUrl(value);
                             else if (property.PropertyType == typeof(DateTime)) val = Helpers.ParseTime(value);
                             else val = Helpers.TryParseByte(value, property);
 
