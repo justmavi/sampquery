@@ -18,6 +18,7 @@ SAMPQuery is a library that allows you to query SAMP servers for information abo
     - [GetServerRulesAsync](#getserverrulesasync)
     - [GetServerPlayers](#getserverplayers)
     - [GetServerPlayersAsync](#getserverplayersasync)
+    - [GetServerIsOMP](#getserverisomp)
     - [SendRconCommand](#sendrconcommand)
     - [SendRconCommandAsync](#sendrconcommandasync)
     - [ServerInfo](#serverinfo)
@@ -166,6 +167,18 @@ Asynchronously requests players online with detailed information (works up to 10
  {
      Console.WriteLine($"{player.PlayerId} | {player.PlayerName} | {player.PlayerScore} | {player.PlayerPing}");
  }
+```
+
+### GetServerIsOMP
+
+Sends a special package to the server, to check if a server is running the open.mp server software or not.
+
+```csharp
+ var server = new SampQuery("127.0.0.1", 7777);
+ bool result = server.GetServerIsOMP();
+ 
+ if (result) Console.WriteLine("Server is using open.mp");
+ else Console.WriteLine("Server is not using open.mp");
 ```
 
 **The maximum value of the player ID is 255. Two-byte identifiers are not supported here (SA-MP limit).**

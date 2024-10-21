@@ -281,7 +281,7 @@ namespace SAMPQuery
         /// <summary>
         /// Get wether the server software is open.mp or not
         /// </summary>
-        /// <returns>An asynchronous task that completes with an instance of Bool</returns>
+        /// <returns>A boolean indicating if the server uses open.mp as it's software.</returns>
         /// <exception cref="System.Net.Sockets.SocketException">Thrown when operation timed out</exception>
         public bool GetServerIsOMP()
         {
