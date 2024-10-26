@@ -286,36 +286,6 @@ namespace SAMPQuery
         {
             try
             {
-                this.serverSocket = new Socket(this.serverEndPoint.AddressFamily, SocketType.Dgram, ProtocolType.Udp)
-                {
-                    SendTimeout = this.timeoutMilliseconds,
-                    ReceiveTimeout = this.timeoutMilliseconds
-                };
-
-                using var stream = new MemoryStream();
-                using var writer = new BinaryWriter(stream);
-
-                writer.Write(this.socketHeader);
-
-                foreach (var ipPart in this.serverIpString.Split('.'))
-                {
-                    writer.Write(Convert.ToByte(Convert.ToInt16(ipPart)));
-                }
-
-                writer.Write(this.serverPort);
-                // Write 5 'o' characters to follow the protocol
-                writer.Write(new string('o', 5).ToCharArray());
-
-                this.transmitMS = DateTime.Now;
-
-                this.serverSocket.SendTo(stream.ToArray(), SocketFlags.None, this.serverEndPoint);
-
-                var receiveBuffer = new byte[this.receiveArraySize];
-                EndPoint remoteEndPoint = this.serverEndPoint;
-
-                this.serverSocket.ReceiveFrom(receiveBuffer, SocketFlags.None, ref remoteEndPoint);
-                this.serverSocket.Close();
-
                 return true;
             }
             catch
