@@ -5,7 +5,6 @@ using System.Net.Sockets;
 using System.Collections.Generic;
 using System.Text;
 using System.Reflection;
-using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using SAMPQuery.Utils;
@@ -109,49 +108,46 @@ namespace SAMPQuery
         {
             this.serverSocket = new Socket(this.serverEndPoint.AddressFamily, SocketType.Dgram, ProtocolType.Udp);
 
-            using(var stream = new MemoryStream())
+            using var stream = new MemoryStream();
+            using var writer = new BinaryWriter(stream);
+            
+            string[] splitIp = this.serverIpString.Split('.');
+
+            writer.Write(this.socketHeader);
+
+            for (sbyte i = 0; i < splitIp.Length; i++)
             {
-                using(var writer = new BinaryWriter(stream))
-                {
-                    string[] splitIp = this.serverIpString.Split('.');
-
-                    writer.Write(this.socketHeader);
-
-                    for (sbyte i = 0; i < splitIp.Length; i++)
-                    {
-                        writer.Write(Convert.ToByte(Convert.ToInt16(splitIp[i])));
-                    }
-
-                    writer.Write(this.serverPort);
-                    writer.Write(packetType);
-
-                    if (packetType == ServerPacketTypes.Rcon) {
-                        writer.Write((ushort)this.password.Length);
-                        writer.Write(this.password.ToCharArray());
-
-                        writer.Write((ushort)cmd.Length);
-                        writer.Write(cmd.ToCharArray());
-                    }
-
-                    this.transmitMS = DateTime.Now;
-
-                    await this.serverSocket.SendToAsync(stream.ToArray(), SocketFlags.None, this.serverEndPoint);
-                    EndPoint rawPoint = this.serverEndPoint;
-                    var data = new byte[this.receiveArraySize];
-
-                    var task = this.serverSocket.ReceiveFromAsync(data, SocketFlags.None, rawPoint);
-
-                    if (await Task.WhenAny(task, Task.Delay(this.timeoutMilliseconds)) != task)
-                    {
-                        this.serverSocket.Close();
-                        throw new SocketException(10060); // Operation timed out
-                    }
-
-                    this.serverSocket.Close();
-                    return data;
-                }
-
+                writer.Write(Convert.ToByte(Convert.ToInt16(splitIp[i])));
             }
+
+            writer.Write(this.serverPort);
+            writer.Write(packetType);
+
+            if (packetType == ServerPacketTypes.Rcon)
+            {
+                writer.Write((ushort)this.password.Length);
+                writer.Write(this.password.ToCharArray());
+
+                writer.Write((ushort)cmd.Length);
+                writer.Write(cmd.ToCharArray());
+            }
+
+            this.transmitMS = DateTime.Now;
+
+            await this.serverSocket.SendToAsync(stream.ToArray(), SocketFlags.None, this.serverEndPoint);
+            EndPoint rawPoint = this.serverEndPoint;
+            var data = new byte[this.receiveArraySize];
+
+            var task = this.serverSocket.ReceiveFromAsync(data, SocketFlags.None, rawPoint);
+
+            if (await Task.WhenAny(task, Task.Delay(this.timeoutMilliseconds)) != task)
+            {
+                this.serverSocket.Close();
+                throw new SocketException(10060); // Operation timed out
+            }
+
+            this.serverSocket.Close();
+            return data;
 
         }
         private byte[] SendSocketToServer(char packetType, string cmd = "")
@@ -162,45 +158,41 @@ namespace SAMPQuery
                 ReceiveTimeout = this.timeoutMilliseconds
             };
 
-            using (var stream = new MemoryStream())
+            using var stream = new MemoryStream();
+            using var writer = new BinaryWriter(stream);
+
+            string[] splitIp = this.serverIpString.Split('.');
+
+            writer.Write(this.socketHeader);
+
+            for (sbyte i = 0; i < splitIp.Length; i++)
             {
-                using (var writer = new BinaryWriter(stream))
-                {
-                    string[] splitIp = this.serverIpString.Split('.');
-
-                    writer.Write(this.socketHeader);
-
-                    for (sbyte i = 0; i < splitIp.Length; i++)
-                    {
-                        writer.Write(Convert.ToByte(Convert.ToInt16(splitIp[i])));
-                    }
-
-                    writer.Write(this.serverPort);
-                    writer.Write(packetType);
-
-                    if (packetType == ServerPacketTypes.Rcon) {
-                        writer.Write((ushort)this.password.Length);
-                        writer.Write(this.password.ToCharArray());
-
-                        writer.Write((ushort)cmd.Length);
-                        writer.Write(cmd.ToCharArray());
-                    }
-
-                    this.transmitMS = DateTime.Now;
-
-                    this.serverSocket.SendTo(stream.ToArray(), SocketFlags.None, this.serverEndPoint);
-
-                    EndPoint rawPoint = this.serverEndPoint;
-                    var szReceive = new byte[this.receiveArraySize];
-
-                    this.serverSocket.ReceiveFrom(szReceive, SocketFlags.None, ref rawPoint);
-
-                    this.serverSocket.Close();
-                    return szReceive;
-                }
-
+                writer.Write(Convert.ToByte(Convert.ToInt16(splitIp[i])));
             }
 
+            writer.Write(this.serverPort);
+            writer.Write(packetType);
+
+            if (packetType == ServerPacketTypes.Rcon)
+            {
+                writer.Write((ushort)this.password.Length);
+                writer.Write(this.password.ToCharArray());
+
+                writer.Write((ushort)cmd.Length);
+                writer.Write(cmd.ToCharArray());
+            }
+
+            this.transmitMS = DateTime.Now;
+
+            this.serverSocket.SendTo(stream.ToArray(), SocketFlags.None, this.serverEndPoint);
+
+            EndPoint rawPoint = this.serverEndPoint;
+            var szReceive = new byte[this.receiveArraySize];
+
+            this.serverSocket.ReceiveFrom(szReceive, SocketFlags.None, ref rawPoint);
+
+            this.serverSocket.Close();
+            return szReceive;
         }
         /// <summary>
         /// Execute RCON command
@@ -286,9 +278,11 @@ namespace SAMPQuery
         {
             try
             {
+                byte[] data = SendSocketToServer(ServerPacketTypes.OMP);
+                
                 return true;
             }
-            catch
+            catch 
             {
                 // timeout results in an exception.
                 // a timeout means the server is not open.mp
@@ -330,19 +324,16 @@ namespace SAMPQuery
         {
             string result = string.Empty;
 
-            using (MemoryStream stream = new MemoryStream(data))
-            {
-                using (BinaryReader reader = new BinaryReader(stream, Encoding.GetEncoding(1251)))
-                {
-                    reader.ReadBytes(11);
-                    short len;
+            using MemoryStream stream = new MemoryStream(data);
+            using BinaryReader reader = new BinaryReader(stream, Encoding.GetEncoding(1251));
+            
+            reader.ReadBytes(11);
+            short len;
 
-                    while ((len = reader.ReadInt16()) != 0)
-                        result += new string(reader.ReadChars(len)) + "\n";
+            while ((len = reader.ReadInt16()) != 0)
+                result += new string(reader.ReadChars(len)) + "\n";
 
-                    return result;
-                }
-            }
+            return result;
         }
 
         private IEnumerable<ServerPlayer> CollectServerPlayersInfoFromByteArray(byte[] data)
@@ -351,21 +342,20 @@ namespace SAMPQuery
 
             using (var stream = new MemoryStream(data))
             {
-                using (BinaryReader read = new BinaryReader(stream))
-                {
-                    read.ReadBytes(10);
-                    read.ReadChar();
+                using BinaryReader read = new BinaryReader(stream);
+                
+                read.ReadBytes(10);
+                read.ReadChar();
 
-                    for (int i = 0, iTotalPlayers = read.ReadInt16(); i < iTotalPlayers; i++)
+                for (int i = 0, iTotalPlayers = read.ReadInt16(); i < iTotalPlayers; i++)
+                {
+                    returnData.Add(new ServerPlayer
                     {
-                        returnData.Add(new ServerPlayer
-                        {
-                            PlayerId = Convert.ToByte(read.ReadByte()),
-                            PlayerName = new string(read.ReadChars(read.ReadByte())),
-                            PlayerScore = read.ReadInt32(),
-                            PlayerPing = read.ReadInt32()
-                        });
-                    }
+                        PlayerId = Convert.ToByte(read.ReadByte()),
+                        PlayerName = new string(read.ReadChars(read.ReadByte())),
+                        PlayerScore = read.ReadInt32(),
+                        PlayerPing = read.ReadInt32()
+                    });
                 }
             }
 
@@ -374,61 +364,55 @@ namespace SAMPQuery
         
         private ServerInfo CollectServerInfoFromByteArray(byte[] data)
         {
-            using (var stream = new MemoryStream(data))
+            using var stream = new MemoryStream(data);
+            using BinaryReader read = new BinaryReader(stream, Encoding.GetEncoding(1251));
+            
+            read.ReadBytes(10);
+            read.ReadChar();
+
+            return new ServerInfo
             {
-                using (BinaryReader read = new BinaryReader(stream, Encoding.GetEncoding(1251)))
-                {
-                    read.ReadBytes(10);
-                    read.ReadChar();
+                Password = Convert.ToBoolean(read.ReadByte()),
+                Players = read.ReadUInt16(),
+                MaxPlayers = read.ReadUInt16(),
 
-                    return new ServerInfo
-                    {
-                        Password = Convert.ToBoolean(read.ReadByte()),
-                        Players = read.ReadUInt16(),
-                        MaxPlayers = read.ReadUInt16(),
+                HostName = new string(read.ReadChars(read.ReadInt32())),
+                GameMode = new string(read.ReadChars(read.ReadInt32())),
+                Language = new string(read.ReadChars(read.ReadInt32())),
 
-                        HostName = new string(read.ReadChars(read.ReadInt32())),
-                        GameMode = new string(read.ReadChars(read.ReadInt32())),
-                        Language = new string(read.ReadChars(read.ReadInt32())),
-
-                        ServerPing = DateTime.Now.Subtract(this.transmitMS).Milliseconds,
-                    };
-                }
-            }
+                ServerPing = DateTime.Now.Subtract(this.transmitMS).Milliseconds,
+            };
         }
         
         private ServerRules CollectServerRulesFromByteArray(byte[] data)
         {
             var sampServerRulesData = new ServerRules();
 
-            using (var stream = new MemoryStream(data))
+            using var stream = new MemoryStream(data);
+            using BinaryReader read = new BinaryReader(stream, Encoding.GetEncoding(1251));
+            
+            read.ReadBytes(10);
+            read.ReadChar();
+
+            string value;
+            object val;
+
+            for (int i = 0, iRules = read.ReadInt16(); i < iRules; i++)
             {
-                using (BinaryReader read = new BinaryReader(stream, Encoding.GetEncoding(1251)))
+                PropertyInfo property = sampServerRulesData.GetType().GetProperty(new string(read.ReadChars(read.ReadByte())).Replace(' ', '_'), BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+                value = new string(read.ReadChars(read.ReadByte()));
+
+                if (property != null)
                 {
-                    read.ReadBytes(10);
-                    read.ReadChar();
+                    if (property.PropertyType == typeof(bool)) val = value == "On";
+                    else if (property.PropertyType == typeof(Uri)) val = Helpers.ParseWebUrl(value);
+                    else if (property.PropertyType == typeof(DateTime)) val = Helpers.ParseTime(value);
+                    else val = Helpers.TryParseByte(value, property);
 
-                    string value;
-                    object val;
-
-                    for (int i = 0, iRules = read.ReadInt16(); i < iRules; i++)
-                    {
-                        PropertyInfo property = sampServerRulesData.GetType().GetProperty(new string(read.ReadChars(read.ReadByte())).Replace(' ', '_'), BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
-                        value = new string(read.ReadChars(read.ReadByte()));
-
-                        if (property != null)
-                        {
-                            if (property.PropertyType == typeof(bool)) val = value == "On";
-                            else if (property.PropertyType == typeof(Uri)) val = Helpers.ParseWebUrl(value);
-                            else if (property.PropertyType == typeof(DateTime)) val = Helpers.ParseTime(value);
-                            else val = Helpers.TryParseByte(value, property);
-
-                            property.SetValue(sampServerRulesData, val);
-                        }
-                    }
-                    return sampServerRulesData;
+                    property.SetValue(sampServerRulesData, val);
                 }
             }
+            return sampServerRulesData;
         }
     }
 }
