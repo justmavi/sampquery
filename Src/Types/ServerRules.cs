@@ -15,17 +15,17 @@ namespace SAMPQuery
         /// <summary>
         /// Mapname
         /// </summary>
-        public string MapName { get; set; } = "UNKNOWN";
+        public string MapName { get; set; }
 
         /// <summary>
         /// Server version
         /// </summary>
-        public string Version { get; set; } = "UNKNOWN";
+        public string Version { get; set; }
 
         /// <summary>
         /// The version of Client Anti-Cheat, for SAMPCAC-enabled servers
         /// </summary>
-        public string SAMPCAC_Version { get; set; } = "N/A";
+        public string SAMPCAC_Version { get; set; }
 
         /// <summary>
         /// ID of weather in server
@@ -35,7 +35,7 @@ namespace SAMPQuery
         /// <summary>
         /// Link to the server's web page
         /// </summary>
-        public Uri Weburl { get; set; } = new Uri("https://sa-mp.com");
+        public Uri Weburl { get; set; }
 
         /// <summary>
         /// Server time

@@ -30,7 +30,7 @@ namespace SAMPQuery
         private readonly IPEndPoint serverEndPoint;
         private readonly string password = "";
         private readonly char[] socketHeader;
-        private Socket? serverSocket = null;
+        private Socket serverSocket = null;
         private DateTime transmitMS;
 
         /// <summary>
@@ -42,10 +42,9 @@ namespace SAMPQuery
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
-            IPAddress? getAddr = null;
 
             // if the given 'host' cannot be parsed as an IP Address, it might be a domain/hostname.
-            if (!IPAddress.TryParse(host, out getAddr))
+            if (!IPAddress.TryParse(host, out IPAddress getAddr))
             {
                 serverIp = Dns.GetHostEntry(host).AddressList.First(a => a.AddressFamily == AddressFamily.InterNetwork);
             }
@@ -444,7 +443,7 @@ namespace SAMPQuery
 
                     for (int i = 0, iRules = read.ReadInt16(); i < iRules; i++)
                     {
-                        PropertyInfo? property = sampServerRulesData.GetType().GetProperty(new string(read.ReadChars(read.ReadByte())).Replace(' ', '_'), BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+                        PropertyInfo property = sampServerRulesData.GetType().GetProperty(new string(read.ReadChars(read.ReadByte())).Replace(' ', '_'), BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
                         value = new string(read.ReadChars(read.ReadByte()));
 
                         if (property != null)
