@@ -1,21 +1,21 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-    <TargetFrameworks>net7.0;net6.0;net5.0;netcoreapp3.1</TargetFrameworks>
-    <PackageId>SAMPQuery</PackageId>
-    <Version>1.1.1</Version>
-    <Authors>justmavi</Authors>
-    <Company>AV Production</Company>
-    <Product>SAMPQuery</Product>
-    <NeutralLanguage>en-US</NeutralLanguage>
-    <Description>SAMPQuery is a class for querying to SAMP servers for .NET</Description>
-    <Summary>SAMPQuery is a class for querying to SAMP servers for .NET</Summary>
-    <Copyright>Copyright © justmavi 2022</Copyright>
-    <Title>SAMPQuery</Title>
-    <PackageTags>samp;sampquery;sampapi;</PackageTags>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
-    <RepositoryUrl>https://github.com/justmavi/sampquery.git</RepositoryUrl>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <TargetFrameworks>net7.0;net6.0;net5.0;netcoreapp3.1</TargetFrameworks>
+        <PackageId>SAMPQuery</PackageId>
+        <Version>1.1.1</Version>
+        <Authors>justmavi</Authors>
+        <Company>AV Production</Company>
+        <Product>SAMPQuery</Product>
+        <NeutralLanguage>en-US</NeutralLanguage>
+        <Description>SAMPQuery is a class for querying to SAMP servers for .NET</Description>
+        <Summary>SAMPQuery is a class for querying to SAMP servers for .NET</Summary>
+        <Copyright>Copyright © justmavi 2022</Copyright>
+        <Title>SAMPQuery</Title>
+        <PackageTags>samp;sampquery;sampapi;</PackageTags>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <RepositoryUrl>https://github.com/justmavi/sampquery.git</RepositoryUrl>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>
@@ -29,16 +29,10 @@
         </Content>
     </ItemGroup>
 
-	<ItemGroup Condition="'$(TargetFramework)' == 'net7.0'">
-		<PackageReference Include="System.Text.Encoding.CodePages" Version="7.0.0" />
-	</ItemGroup>
-	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
-	    <PackageReference Include="System.Text.Encoding.CodePages" Version="6.0.0" />
-	</ItemGroup>
-	<ItemGroup Condition="'$(TargetFramework)' == 'net5.0'">
-		<PackageReference Include="System.Text.Encoding.CodePages" Version="5.0.0" />
-	</ItemGroup>
-	<ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
-		<PackageReference Include="System.Text.Encoding.CodePages" Version="4.7.0" />
-	</ItemGroup>
+    <ItemGroup Condition="'$(TargetFramework)' == 'net7.0'">
+        <PackageReference Include="System.Text.Encoding.CodePages" Version="7.0.0"/>
+    </ItemGroup>
+    <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
+        <PackageReference Include="System.Text.Encoding.CodePages" Version="6.0.0"/>
+    </ItemGroup>
 </Project>
