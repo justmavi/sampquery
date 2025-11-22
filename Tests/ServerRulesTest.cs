@@ -1,5 +1,3 @@
-using System.Threading.Tasks;
-using NUnit.Framework;
 using SAMPQuery;
 
 namespace Tests
@@ -18,7 +16,7 @@ namespace Tests
             var sampQuery = this.CreateDefaultSampQueryInstance(hostname, port);
             var response = sampQuery.GetServerRules();
 
-            Assert.IsInstanceOf(typeof(ServerRules), response);
+            Assert.That(response, Is.InstanceOf<ServerRules>());
         }
 
         [Test]
@@ -29,7 +27,7 @@ namespace Tests
             var sampQuery = this.CreateDefaultSampQueryInstance(hostname, port);
             var response = await sampQuery.GetServerRulesAsync();
 
-            Assert.IsInstanceOf(typeof(ServerRules), response);
+            Assert.That(response, Is.InstanceOf<ServerRules>());
         }
 
         private SampQuery CreateDefaultSampQueryInstance(string ip, ushort port)
