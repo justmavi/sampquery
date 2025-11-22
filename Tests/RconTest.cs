@@ -1,5 +1,3 @@
-using System;
-using NUnit.Framework;
 using SAMPQuery;
 
 namespace Tests
@@ -29,7 +27,7 @@ namespace Tests
         [Test]
         [TestCase(SERVER_HOSTNAME, SERVER_PORT, ANY_RCON_PASSWORD, null)]
         [TestCase(SERVER_IP, SERVER_PORT, ANY_RCON_PASSWORD, null)]
-        public void SendRconCommand_PassingNullCommand_ThrowsArgumentException(string host, ushort port, string password, string command)
+        public void SendRconCommand_PassingNullCommand_ThrowsArgumentException(string host, ushort port, string password, string? command)
         {
             var sampQuery = this.CreateDefaultSampQueryInstance(host, port, password);
             TestDelegate func = () => sampQuery.SendRconCommand(command);
@@ -51,7 +49,7 @@ namespace Tests
         [Test]
         [TestCase(SERVER_HOSTNAME, SERVER_PORT, ANY_RCON_PASSWORD, null)]
         [TestCase(SERVER_IP, SERVER_PORT, ANY_RCON_PASSWORD, null)]
-        public void SendRconCommandAsync_PassingNullCommand_ThrowsArgumentException(string host, ushort port, string password, string command)
+        public void SendRconCommandAsync_PassingNullCommand_ThrowsArgumentException(string host, ushort port, string password, string? command)
         {
             var sampQuery = this.CreateDefaultSampQueryInstance(host, port, password);
             AsyncTestDelegate func = async () => await sampQuery.SendRconCommandAsync(command);
@@ -73,7 +71,7 @@ namespace Tests
         [Test]
         [TestCase(SERVER_HOSTNAME, SERVER_PORT, null, RCON_COMMAND)]
         [TestCase(SERVER_IP, SERVER_PORT, null, RCON_COMMAND)]
-        public void SendRconCommand_PassingNullPassword_ThrowsArgumentException(string host, ushort port, string password, string command)
+        public void SendRconCommand_PassingNullPassword_ThrowsArgumentException(string host, ushort port, string? password, string command)
         {
             var sampQuery = this.CreateDefaultSampQueryInstance(host, port, password);
             TestDelegate func = () => sampQuery.SendRconCommand(command);
@@ -95,7 +93,7 @@ namespace Tests
         [Test]
         [TestCase(SERVER_HOSTNAME, SERVER_PORT, null, RCON_COMMAND)]
         [TestCase(SERVER_IP, SERVER_PORT, null, RCON_COMMAND)]
-        public void SendRconCommandAsync_PassingNullPassword_ThrowsArgumentException(string host, ushort port, string password, string command)
+        public void SendRconCommandAsync_PassingNullPassword_ThrowsArgumentException(string host, ushort port, string? password, string command)
         {
             var sampQuery = this.CreateDefaultSampQueryInstance(host, port, password);
             AsyncTestDelegate func = async () => await sampQuery.SendRconCommandAsync(command);
