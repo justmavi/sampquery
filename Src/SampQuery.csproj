@@ -11,6 +11,7 @@
         <Description>SAMPQuery is a class for querying to SAMP servers for .NET</Description>
         <Summary>SAMPQuery is a class for querying to SAMP servers for .NET</Summary>
         <Copyright>Copyright © justmavi 2025</Copyright>
+        <Nullable>enable</Nullable>
         <Title>SAMPQuery</Title>
         <PackageTags>samp;sampquery;sampapi;</PackageTags>
         <PackageReadmeFile>README.md</PackageReadmeFile>
