@@ -12,13 +12,9 @@ SAMPQuery is a library that allows you to query SAMP servers for information abo
   - [Usage](#usage)
   - [Documentation](#documentation)
     - [Constructor](#constructor)
-    - [GetServerInfo](#getserverinfo)
     - [GetServerInfoAsync](#getserverinfoasync)
-    - [GetServerRules](#getserverrules)
     - [GetServerRulesAsync](#getserverrulesasync)
-    - [GetServerPlayers](#getserverplayers)
     - [GetServerPlayersAsync](#getserverplayersasync)
-    - [SendRconCommand](#sendrconcommand)
     - [SendRconCommandAsync](#sendrconcommandasync)
     - [ServerInfo](#serverinfo)
     - [ServerRules](#serverrules)
@@ -90,17 +86,6 @@ Hostname is also allowed
 var server = new SampQuery("localhost", 7777);
 ```
 
-### GetServerInfo
-
-Requests basic information about the server
-
-```csharp
-var server = new SampQuery("127.0.0.1", 7777);
-ServerInfo data =  server.GetServerInfo();
-
-Console.WriteLine($"Server {data.HostName}. Online: {data.Players}/{data.MaxPlayers}");
-```
-
 ### GetServerInfoAsync
 
 Asynchronously requests basic information about the server
@@ -112,17 +97,6 @@ ServerInfo data = await server.GetServerInfoAsync();
 Console.WriteLine($"Server {data.HostName}. Online: {data.Players}/{data.MaxPlayers}");
 ```
 
-### GetServerRules
-
-Requests the rules, set by the server
-
-```csharp
-var server = new SampQuery("127.0.0.1", 7777);
-ServerInfo data = server.GetServerRules();
-
-Console.WriteLine($"Lagcomp {(data.Lagcomp ? "On" : "Off")}. Map: {data.MapName}. SAMPCAC: {data.SAMPCAC_Version ?? "Isn't required"}");
-```
-
 ### GetServerRulesAsync
 
 Asynchronously requests the rules, set by the server
@@ -132,22 +106,6 @@ var server = new SampQuery("127.0.0.1", 7777);
 ServerInfo data = await server.GetServerRulesAsync();
 
 Console.WriteLine($"Lagcomp {(data.Lagcomp ? "On" : "Off")}. Map: {data.MapName}. SAMPCAC: {data.SAMPCAC_Version ?? "Isn't required"}");
-```
-
-### GetServerPlayers
-
-Requests players online with detailed information (works up to 100 online, SA-MP limit)
-
-```csharp
- var server = new SampQuery("127.0.0.1", 7777);
- IEnumerable<ServerPlayer> players = server.GetServerPlayers();
-
- Console.WriteLine("ID | Nick | Score | Ping\n");
-
- foreach(ServerPlayer player in players)
- {
-     Console.WriteLine($"{player.PlayerId} | {player.PlayerName} | {player.PlayerScore} | {player.PlayerPing}");
- }
 ```
 
 **The maximum value of the player ID is 255. Two-byte identifiers are not supported here (SA-MP limit).**
@@ -169,17 +127,6 @@ Asynchronously requests players online with detailed information (works up to 10
 ```
 
 **The maximum value of the player ID is 255. Two-byte identifiers are not supported here (SA-MP limit).**
-
-### SendRconCommand
-
-Executes RCON command
-
-```csharp
- var server = new SampQuery("127.0.0.1", 7777, "helloworld");
- string answer = sampQuery.SendRconCommand("varlist");
-
- Console.WriteLine($"Server says: {answer}");
-```
 
 ### SendRconCommandAsync
 

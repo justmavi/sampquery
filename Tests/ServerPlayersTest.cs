@@ -12,17 +12,6 @@ namespace Tests
         [Test]
         [TestCase(SERVER_HOSTNAME, SERVER_PORT)]
         [TestCase(SERVER_IP, SERVER_PORT)]
-        public void GetServerPlayers_Returns_CollectionOfServerPlayerInstances(string hostname, ushort port)
-        {   
-            var sampQuery = this.CreateDefaultSampQueryInstance(hostname, port);
-            var response = sampQuery.GetServerPlayers();
-
-            Assert.That(response, Is.All.InstanceOf<ServerPlayer>());
-        }
-
-        [Test]
-        [TestCase(SERVER_HOSTNAME, SERVER_PORT)]
-        [TestCase(SERVER_IP, SERVER_PORT)]
         public async Task GetServerPlayersAsync_Returns_CollectionOfServerPlayerInstances(string hostname, ushort port)
         {   
             var sampQuery = this.CreateDefaultSampQueryInstance(hostname, port);

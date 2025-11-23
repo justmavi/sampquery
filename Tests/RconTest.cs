@@ -15,29 +15,6 @@ namespace Tests
         [Test]
         [TestCase(SERVER_HOSTNAME, SERVER_PORT, ANY_RCON_PASSWORD, EMPTY_STRING)]
         [TestCase(SERVER_IP, SERVER_PORT, ANY_RCON_PASSWORD, EMPTY_STRING)]
-        public void SendRconCommand_PassingEmptyCommand_ThrowsArgumentException(string host, ushort port, string password, string command)
-        {
-            var sampQuery = this.CreateDefaultSampQueryInstance(host, port, password);
-            TestDelegate func = () => sampQuery.SendRconCommand(command);
-
-            Assert.Throws(Is.TypeOf<ArgumentException>().And.Property("ParamName").EqualTo(nameof(command)), func);
-
-        }
-
-        [Test]
-        [TestCase(SERVER_HOSTNAME, SERVER_PORT, ANY_RCON_PASSWORD, null)]
-        [TestCase(SERVER_IP, SERVER_PORT, ANY_RCON_PASSWORD, null)]
-        public void SendRconCommand_PassingNullCommand_ThrowsArgumentException(string host, ushort port, string password, string? command)
-        {
-            var sampQuery = this.CreateDefaultSampQueryInstance(host, port, password);
-            TestDelegate func = () => sampQuery.SendRconCommand(command);
-
-            Assert.Throws(Is.TypeOf<ArgumentNullException>().And.Property("ParamName").EqualTo(nameof(command)), func);
-        }
-
-        [Test]
-        [TestCase(SERVER_HOSTNAME, SERVER_PORT, ANY_RCON_PASSWORD, EMPTY_STRING)]
-        [TestCase(SERVER_IP, SERVER_PORT, ANY_RCON_PASSWORD, EMPTY_STRING)]
         public void SendRconCommandAsync_PassingEmptyCommand_ThrowsArgumentException(string host, ushort port, string password, string command)
         {
             var sampQuery = this.CreateDefaultSampQueryInstance(host, port, password);
@@ -60,28 +37,6 @@ namespace Tests
         [Test]
         [TestCase(SERVER_HOSTNAME, SERVER_PORT, EMPTY_STRING, RCON_COMMAND)]
         [TestCase(SERVER_IP, SERVER_PORT, EMPTY_STRING, RCON_COMMAND)]
-        public void SendRconCommand_PassingEmptyPassword_ThrowsArgumentException(string host, ushort port, string password, string command)
-        {
-            var sampQuery = this.CreateDefaultSampQueryInstance(host, port, password);
-            TestDelegate func = () => sampQuery.SendRconCommand(command);
-
-            Assert.Throws(Is.TypeOf<ArgumentException>().And.Property("ParamName").EqualTo(nameof(password)), func);
-        }
-
-        [Test]
-        [TestCase(SERVER_HOSTNAME, SERVER_PORT, null, RCON_COMMAND)]
-        [TestCase(SERVER_IP, SERVER_PORT, null, RCON_COMMAND)]
-        public void SendRconCommand_PassingNullPassword_ThrowsArgumentException(string host, ushort port, string? password, string command)
-        {
-            var sampQuery = this.CreateDefaultSampQueryInstance(host, port, password);
-            TestDelegate func = () => sampQuery.SendRconCommand(command);
-
-            Assert.Throws(Is.TypeOf<ArgumentNullException>().And.Property("ParamName").EqualTo(nameof(password)), func);
-        }
-
-        [Test]
-        [TestCase(SERVER_HOSTNAME, SERVER_PORT, EMPTY_STRING, RCON_COMMAND)]
-        [TestCase(SERVER_IP, SERVER_PORT, EMPTY_STRING, RCON_COMMAND)]
         public void SendRconCommandAsync_PassingEmptyPassword_ThrowsArgumentException(string host, ushort port, string password, string command)
         {
             var sampQuery = this.CreateDefaultSampQueryInstance(host, port, password);
@@ -99,19 +54,6 @@ namespace Tests
             AsyncTestDelegate func = async () => await sampQuery.SendRconCommandAsync(command);
 
             Assert.ThrowsAsync(Is.TypeOf<ArgumentNullException>().And.Property("ParamName").EqualTo(nameof(password)), func);
-        }
-
-        [Test]
-        [TestCase(SERVER_HOSTNAME, SERVER_PORT, CHANGEME, RconPasswordExceptionMessages.CHANGEME_NOT_ALLOWED)]
-        [TestCase(SERVER_IP, SERVER_PORT, CHANGEME, RconPasswordExceptionMessages.CHANGEME_NOT_ALLOWED)]
-        [TestCase(SERVER_HOSTNAME, SERVER_PORT, ANY_RCON_PASSWORD, RconPasswordExceptionMessages.INVALD_RCON_PASSWORD)]
-        [TestCase(SERVER_IP, SERVER_PORT, ANY_RCON_PASSWORD, RconPasswordExceptionMessages.INVALD_RCON_PASSWORD)]
-        public void SendRconCommand_Throws_RconPasswordException(string host, ushort port, string password, string message)
-        {
-            var sampQuery = this.CreateDefaultSampQueryInstance(host, port, password);
-            TestDelegate func = () => sampQuery.SendRconCommand(RCON_COMMAND);
-
-            Assert.Throws(Is.TypeOf<RconPasswordException>().And.Message.EqualTo(message), func);
         }
 
         [Test]
