@@ -170,41 +170,6 @@ namespace SAMPQuery
             }
         }
 
-        private byte[] SendSocketToServer(char packetType, string command = null)
-        {
-            var packet = BuildPackage(packetType, command);
-            transmitMs = DateTime.Now;
-
-            using var socket = new Socket(serverEndPoint.AddressFamily, SocketType.Dgram, ProtocolType.Udp);
-            
-            socket.SendTimeout = SampQueryConstants.TimeoutMilliseconds;
-            socket.ReceiveTimeout = SampQueryConstants.TimeoutMilliseconds;
-            
-            socket.SendTo(packet, SocketFlags.None, serverEndPoint);
-
-            var receiveBuffer = new byte[SampQueryConstants.ReceiveBufferSize];
-            EndPoint endPoint = serverEndPoint;
-            socket.ReceiveFrom(receiveBuffer, SocketFlags.None, ref endPoint);
-
-            return receiveBuffer;
-        }
-
-        /// <summary>
-        /// Execute RCON command
-        /// </summary>
-        /// <param name="command">Command name. See https://sampwiki.blast.hk/wiki/Controlling_Your_Server#RCON_Commands</param>
-        /// <returns>Server response</returns>
-        /// <exception cref="System.ArgumentException">Thrown when command or RCON password is an empty string</exception>
-        /// <exception cref="System.ArgumentNullException">Thrown when command or RCON password is null</exception>
-        /// <exception cref="System.Net.Sockets.SocketException">Thrown when operation timed out</exception>
-        /// <exception cref="SAMPQuery.RconPasswordException">Thrown when RCON password is invalid (changeme or incorrect)</exception>
-        public string SendRconCommand(string command)
-        {
-            ValidateRconCommand(command);
-            var data = SendSocketToServer(ServerPacketTypes.Rcon, command);
-            return ProcessRconResponse(data);
-        }
-
         /// <summary>
         /// Execute RCON command
         /// </summary>
@@ -253,17 +218,6 @@ namespace SAMPQuery
         }
 
         /// <summary>
-        /// Get server players
-        /// </summary>
-        /// <returns>Collection of ServerPlayer instances</returns>
-        /// <exception cref="System.Net.Sockets.SocketException">Thrown when operation timed out</exception>
-        public IEnumerable<ServerPlayer> GetServerPlayers()
-        {
-            var data = SendSocketToServer(ServerPacketTypes.Players);
-            return CollectServerPlayersInfoFromByteArray(data);
-        }
-
-        /// <summary>
         /// Get information about server
         /// </summary>
         /// <returns>An asynchronous task that completes with an instance of ServerPlayer</returns>
@@ -275,17 +229,6 @@ namespace SAMPQuery
         }
 
         /// <summary>
-        /// Get information about server
-        /// </summary>
-        /// <returns>An instance of ServerPlayer</returns>
-        /// <exception cref="System.Net.Sockets.SocketException">Thrown when operation timed out</exception>
-        public ServerInfo GetServerInfo()
-        {
-            var data = SendSocketToServer(ServerPacketTypes.Info);
-            return CollectServerInfoFromByteArray(data);
-        }
-
-        /// <summary>
         /// Get server rules
         /// </summary>
         /// <returns>An asynchronous task that completes with an instance of ServerRules</returns>
@@ -293,17 +236,6 @@ namespace SAMPQuery
         public async Task<ServerRules> GetServerRulesAsync()
         {
             var data = await SendSocketToServerAsync(ServerPacketTypes.Rules);
-            return CollectServerRulesFromByteArray(data);
-        }
-
-        /// <summary>
-        /// Get server rules
-        /// </summary>
-        /// <returns>An instance of ServerRules</returns>
-        /// <exception cref="System.Net.Sockets.SocketException">Thrown when operation timed out</exception>
-        public ServerRules GetServerRules()
-        {
-            var data = SendSocketToServer(ServerPacketTypes.Rules);
             return CollectServerRulesFromByteArray(data);
         }
 

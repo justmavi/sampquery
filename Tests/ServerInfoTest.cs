@@ -11,17 +11,6 @@ namespace Tests
         [Test]
         [TestCase(SERVER_HOSTNAME, SERVER_PORT)]
         [TestCase(SERVER_IP, SERVER_PORT)]
-        public void GetServerInfo_Returns_ServerInfoInstance(string hostname, ushort port)
-        {   
-            var sampQuery = this.CreateDefaultSampQueryInstance(hostname, port);
-            var response = sampQuery.GetServerInfo();
-
-            Assert.That(response, Is.InstanceOf<ServerInfo>());
-        }
-
-        [Test]
-        [TestCase(SERVER_HOSTNAME, SERVER_PORT)]
-        [TestCase(SERVER_IP, SERVER_PORT)]
         public async Task GetServerInfoAsync_Returns_ServerInfoInstance(string hostname, ushort port)
         {   
             var sampQuery = this.CreateDefaultSampQueryInstance(hostname, port);
